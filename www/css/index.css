@@ -97,6 +97,16 @@ h1 {
     display:none;
 }
 
+.event.loading {
+    background-color:#333333;
+    display:block;
+}
+
+.event.loaded {
+    background-color:#4B946A;
+    display:none;
+}
+
 @keyframes fade {
     from { opacity: 1.0; }
     50% { opacity: 0.4; }

@@ -26,7 +26,15 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+        document.addEventListener('load', this.onLoad, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    
+    // Events Handlers
+    //
+    // deviceready Event Handler
+    onLoad: function() {
+        app.loadedEvent('load');
     },
     // deviceready Event Handler
     //
@@ -35,6 +43,17 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
+    // Update DOM on a Load Event
+    loadedEvent: function(id) {
+        var parentElement = document.getElementById(id);
+        var loadingElement = parentElement.querySelector('.loading');
+        var loadedElement = parentElement.querySelector('.loaded');
+
+        loadingElement.setAttribute('style', 'display:none;');
+        loadedElement.setAttribute('style', 'display:block;');
+
+        console.log('Loaded Event: ' + id);
+    }
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);

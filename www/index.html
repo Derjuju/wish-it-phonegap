@@ -28,12 +28,17 @@
     <body>
         <div class="app">
             <h1>Wish it</h1>
+            <div id="deviceload" class="blink">
+                <p class="event loading">Loading ...</p>
+                <p class="event loaded">Loaded !</p>
+            </div>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
         </div>
         <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/plugins/SocialSharing.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
