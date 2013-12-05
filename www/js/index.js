@@ -53,7 +53,7 @@ var app = {
         loadedElement.setAttribute('style', 'display:block;');
 
         console.log('Loaded Event: ' + id);
-    }
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
