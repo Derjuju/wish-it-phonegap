@@ -26,22 +26,42 @@
         <title>Wish it</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Wish it</h1>
-            <div id="deviceload" class="blink">
-                <p class="event loading">Loading ...</p>
-                <p class="event loaded">Loaded !</p>
-            </div>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+        <!-- application : start -->
+        <div data-role="page" class="app container">
+          
+          <!-- navigation : start -->
+          <div data-role="navbar" class="navigation">
+            <!-- // menu navigation : start -->
+		<div class="meny">
+			<div class="fondListe">
+                          <ul class="menu-list"></ul>
+			</div>			
+		</div>
+		<!-- // menu navigation : end -->
+          </div>
+          <!-- navigation : end -->
+          
+          <!-- contenu : start -->
+          <div data-role="content" class="contents">
+            <!-- // mainContent : start -->
+            <div class="mainContent"></div>
+            <!-- // mainContent : end -->
+          </div>
+          <!-- contenu : start -->
+            
         </div>
-        <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript" src="js/plugins/SocialSharing.js"></script>
+        <!-- application : end -->
+        
+        <!-- javascript : start -->
+        <!-- //<script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/plugins/SocialSharing.js"></script>-->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/meny.js"></script>
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
+        <!-- javascript : end -->
     </body>
 </html>
