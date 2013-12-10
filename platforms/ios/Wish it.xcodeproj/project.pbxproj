@@ -36,6 +36,7 @@
 		4C1567ABD31042E09255B647 /* SystemConfiguration.framework in Resources */ = {isa = PBXBuildFile; fileRef = E1A76AB822FB472F8B9B1244 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9BD994BFE8F742FDA7AC598E /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = AF093CF0B85843B8A9FDD7E7 /* CDVDevice.m */; };
 		3BEC04D9172F4EBEA4D0FA9C /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4306435B4E47FFBEF90EA5 /* CDVFileTransfer.m */; };
+		03A39E6E21D84ED8AFC015BD /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C63231E25BA9466991F7C414 /* CDVSplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,8 @@
 		BE5EBDEEEBD540199AF06CD9 /* CDVDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVDevice.h"; path = "org.apache.cordova.device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		9A4306435B4E47FFBEF90EA5 /* CDVFileTransfer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVFileTransfer.m"; path = "org.apache.cordova.file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		10A957AF246B42C6B29A1FAA /* CDVFileTransfer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVFileTransfer.h"; path = "org.apache.cordova.file-transfer/CDVFileTransfer.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		C63231E25BA9466991F7C414 /* CDVSplashScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVSplashScreen.m"; path = "org.apache.cordova.splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		FA3E21D95C9746B7B8D7C963 /* CDVSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSplashScreen.h"; path = "org.apache.cordova.splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				BE5EBDEEEBD540199AF06CD9 /* CDVDevice.h */,
 				9A4306435B4E47FFBEF90EA5 /* CDVFileTransfer.m */,
 				10A957AF246B42C6B29A1FAA /* CDVFileTransfer.h */,
+				C63231E25BA9466991F7C414 /* CDVSplashScreen.m */,
+				FA3E21D95C9746B7B8D7C963 /* CDVSplashScreen.h */,
 			);
 			name = Plugins;
 			path = "Wish it/Plugins";
@@ -395,6 +400,7 @@
 				6092887F93B445C7B2222238 /* CDVReachability.m in Sources */,
 				9BD994BFE8F742FDA7AC598E /* CDVDevice.m in Sources */,
 				3BEC04D9172F4EBEA4D0FA9C /* CDVFileTransfer.m in Sources */,
+				03A39E6E21D84ED8AFC015BD /* CDVSplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

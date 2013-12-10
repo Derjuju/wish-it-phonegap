@@ -31,6 +31,10 @@ var entries, entriesLink, entriesLabel;
 
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IPHONE = navigator.userAgent.match( /iphone/gi );
+    
+// url des services
+var webservice_version = "http://localhost:8888/phonegap/wish-it/webservices/check-version.php";
+var webservice_update = "http://localhost:8888/phonegap/wish-it/webservices/update.php";
 
 
 //---------------------------------
@@ -71,27 +75,44 @@ function MyApplication(){
   
   // constructeur
   this.initialise = function() {
+    /*setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 2000);
+    navigator.splashscreen.show();*/
+    
     connexion = new Connexion();
-    if(connexion.miseAjourDonnees())
+    
+    var etatApplication = connexion.verifieVersion();
+    if(etatApplication >= 0)
     {
-      initialiseUI();
-      initialiseDonnees();
+      // donnees périmées
+      if(etatApplication == 0)
+      {
+        var etatDonnees = connexion.miseAjourDonnees();
+        // impossible de mettre à jour, alerte que l'on travaille en local
+        if(etatDonnees == 0)
+        {
+          //@todo : affichage message erreur version des données périmée
+          console.log("[Alerte][version des données périmée]");
+        }
+      }
+      
+      // charge les données du cache
+      connexion.initialiseDonnees();
+        
+      // données chargées en local, lance UI
+      initialiseUI();      
     }else{
-      //@todo : affichage message erreur récupération des données
+      //@todo : affichage message erreur version de l'application périmée
+      console.log("[Erreur][version de l'application périmée]");
     }
   }; 
   
   function initialiseUI() {
     menuNav = new MenuNavigation();
-  }
-  
-  function initialiseDonnees() {
-    entries = ['icon-new.jpg', 'icon-famille.jpg', 'icon-fun.jpg', 'icon-pro.jpg', 'icon-autre.jpg', 'icon-mes-infos.jpg'];
-    entriesLabel = ['New', 'Famille', 'Fun','Pro', 'Autre', 'Mes Infos'];
-    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos'];  
-    
     menuNav.fabricationListeMenu();
-    
-  }
+  }  
   
 }
+
+
