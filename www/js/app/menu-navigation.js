@@ -16,61 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var myApp;
-var entries, entriesLink, entriesLabel;
-
-var IS_ANDROID = navigator.userAgent.match( /android/gi ),
-    IS_IPHONE = navigator.userAgent.match( /iphone/gi );
-
-var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();        
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    
-    // Events Handlers
-    //
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        myApp = new MyApplication();
-        myApp.initialise();
-    }
-};
-
-function MyApplication(){
-  var self = this;
-  var menuNav;
-  
-  // constructeur
-  this.initialise = function() {
-    initialiseUI();
-    initialiseDonnees();
-  }; 
-  
-  function initialiseUI() {
-    menuNav = new MenuNavigation();
-  }
-  
-  function initialiseDonnees() {
-    entries = ['icon-new.jpg', 'icon-famille.jpg', 'icon-fun.jpg', 'icon-pro.jpg', 'icon-autre.jpg', 'icon-mes-infos.jpg'];
-    entriesLabel = ['New', 'Famille', 'Fun','Pro', 'Autre', 'Mes Infos'];
-    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos'];  
-    
-    menuNav.fabricationListeMenu();
-    
-  }
-  
-}
 
 //******************************
 // Class MenuNavigation
@@ -82,6 +27,11 @@ function MenuNavigation() {
   
   // constructeur
   this.initialise = function() {
+    // largeur = 36% window or max = 228px
+  	var largeurDevice = Math.ceil(window.innerWidth*0.36);
+  	if(largeurDevice > 228) largeurDevice = 228;
+  	
+  	
     
     self.menu = Meny.create({
       // The element that will be animated in from off screen
@@ -97,7 +47,7 @@ function MenuNavigation() {
       //height: 200,
 
       // [optional] The width of the menu (when using left/right position)
-      width: 228,
+      width: largeurDevice,
 
       // [optional] Distance from mouse (in pixels) when menu should open
       threshold: window.innerWidth / 4

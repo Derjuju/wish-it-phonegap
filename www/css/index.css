@@ -66,6 +66,8 @@ body {
  */
 .navigation {
   display: none;
+  width: 36%;
+  max-width: 228px;
 }
 .meny {
 	display: block; /* masque au chargement */
@@ -80,8 +82,9 @@ body {
 	        
 	background: #ff0000;
 	
-	width: 36%;
-        max-width: 228px;
+	/*width: 36%;
+        max-width: 228px;*/
+    width:100%;
 }
 
 /**
