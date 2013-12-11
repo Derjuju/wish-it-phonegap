@@ -61,7 +61,12 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         myApp = new MyApplication();
-        myApp.initialise();
+        
+        // simulation du chargement
+        setTimeout(function() { myApp.initialise(); }, 1000);
+        // pour la prod : 
+        //myApp.initialise();
+        
     }
 };
 
@@ -71,47 +76,85 @@ var app = {
 function MyApplication(){
   var self = this;
   var menuNav;
+  var contenuPrincipal;
   var connexion;
   
   // constructeur
   this.initialise = function() {
-    /*setTimeout(function() {
-        navigator.splashscreen.hide();
-    }, 2000);
-    navigator.splashscreen.show();*/
+    navigator.splashscreen.show();
+    connexion = new Connexion();    
     
-    connexion = new Connexion();
+    $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );
     
-    var etatApplication = connexion.verifieVersion();
+    if(!connexion.verifieVersion())
+    {
+      $("#eventManager").off('versionVerifiee');
+      //@todo : affichage message pas de connectivité
+      console.log("[Alerte][pas de connectivité]");
+      
+      //initialise les Données depuis le cache
+      //@todo : initialise les Données
+      // charge les données du cache
+      $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
+      connexion.initialiseDonnees();
+    }
+  };
+  
+  function onVersionVerifiee() {
+    $("#eventManager").off('versionVerifiee');
+    // on teste la valeur de la verification
+    var etatApplication = connexion.getEtatApplication();
+    console.log("etat Application : "+etatApplication);
+    
     if(etatApplication >= 0)
     {
-      // donnees périmées
-      if(etatApplication == 0)
-      {
-        var etatDonnees = connexion.miseAjourDonnees();
-        // impossible de mettre à jour, alerte que l'on travaille en local
-        if(etatDonnees == 0)
-        {
-          //@todo : affichage message erreur version des données périmée
-          console.log("[Alerte][version des données périmée]");
-        }
-      }
-      
       // charge les données du cache
+      $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
       connexion.initialiseDonnees();
-        
-      // données chargées en local, lance UI
-      initialiseUI();      
+      
     }else{
       //@todo : affichage message erreur version de l'application périmée
       console.log("[Erreur][version de l'application périmée]");
     }
-  }; 
+    
+  }
+  
+  function onInitialiseDonneesReady(){
+    $("#eventManager").off('initialiseDonneesReady');
+    console.log("onInitialiseDonneesReady");
+    // données chargées en local, lance UI
+    initialiseUI(); 
+  }
   
   function initialiseUI() {
+    $("#eventManager").on('menuNavigationReady', function() { onMenuNavigationReady(); } );
     menuNav = new MenuNavigation();
     menuNav.fabricationListeMenu();
   }  
+  
+  function onMenuNavigationReady(){
+    $("#eventManager").off('menuNavigationReady');
+    navigator.splashscreen.hide();
+    menuNav.ouvreMenu();
+    
+    updateHeightInner();
+    
+    
+    
+  }
+  
+  
+  // à déplacer dans la partie gestion de contenu
+  function updateHeightInner() {
+    //newsList.style.height = window.innerHeight + 'px';
+    //$(newsList).css('height',(window.innerHeight - 220) + 'px');
+    $(".mainContent").height(window.innerHeight);
+    $(".mainContent").width((window.innerWidth - 10));
+    $(".mainContent").css('margin-left','10px');
+    
+    //$(newsListInner).css('height',window.innerHeight + 'px');	
+    //stroll.bind( $(newsListInner));
+  }
   
 }
 

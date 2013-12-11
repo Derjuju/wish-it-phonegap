@@ -22,88 +22,115 @@
 function Connexion() {
   var self = this;
   
+  self.etatApplication = null;
+  
   this.verifieVersion = function(){
-    var etatApplication = 0;
+    var etatApplication = false;
     if(this.testConnectivite())
-    {      
-      // controle version application
+    {
+      etatApplication = true;
       
-      $.ajax({
-        type: 'POST',
-        url: webservice_version,
-        data: {},
-        dataType: "json",
-        async:false
-      }).done(function(data){        
-            var appVersion = "";
-            var dataVersion = "";
-            //var resultat = JSON.parse(data); // convert to JSON from string
-            var resultat = data; // data already JSON
+        $.ajax({
+                  type: 'POST',
+                  url: webservice_version,
+                  data: {},
+                  dataType: "json",
+                  async:true
+                }).done(function(data){        
+                      var appVersion = "";
+                      var dataVersion = "";
+                      //var resultat = JSON.parse(data); // convert to JSON from string
+                      var resultat = data; // data already JSON
 
-            if(resultat["app-version"] != undefined)
-            {
-              appVersion = resultat["app-version"];
-            }
-            if(resultat["data-version"] != undefined)
-            {
-              dataVersion = resultat["data-version"];
-            }
-            // test si différence de version de l'application
-            if(appVersion != getAppVersion())
-            {
-              etatApplication = -1; // il faut mettre à jour l'application
-            }else{
-              // test si différence de version des données
-              if(dataVersion != getDataVersion())
-              {
-                etatApplication = 0; // il faut mettre à jour les données
-              }else{
-                // OK, application et données à jour
-                etatApplication = 1;
-              }
-            }          
+                      if(resultat["app-version"] != undefined)
+                      {
+                        appVersion = resultat["app-version"];
+                      }
+                      if(resultat["data-version"] != undefined)
+                      {
+                        dataVersion = resultat["data-version"];
+                      }
+                          
+                      compareVersionAppEtData(appVersion,dataVersion);
 
-          }
-      );
+                    }
+                );
       
-      
-      /*
-      $.post(webservice_version,function(data){
-        
-        var appVersion = "";
-        var dataVersion = "";
-        var resultat = JSON.parse(data);
-        
-        if(resultat["app-version"] != undefined)
-        {
-          appVersion = resultat["app-version"];
-        }
-        if(resultat["data-version"] != undefined)
-        {
-          dataVersion = resultat["data-version"];
-        }
-        // test si différence de version de l'application
-        if(appVersion != getAppVersion())
-        {
-          etatApplication = -1; // il faut mettre à jour l'application
-        }else{
-          // test si différence de version des données
-          if(dataVersion != getDataVersion())
-          {
-            etatApplication = 0; // il faut mettre à jour les données
-          }else{
-            // OK, application et données à jour
-            etatApplication = 1;
-          }
-        }          
-      
-      });*/
     }else{
       // pas de connexion tourne en local
-      etatApplication = 0;
+      etatApplication = false;
     }    
     return etatApplication;
   };
+  
+  function compareVersionAppEtData(appVersion,dataVersion){
+    // test si différence de version de l'application
+    if(appVersion != getAppVersion())
+    {
+      self.etatApplication = -1; // il faut mettre à jour l'application
+    }else{
+      // test si différence de version des données
+      if(dataVersion != getDataVersion())
+      {
+        self.etatApplication = 0; // il faut mettre à jour les données
+      }else{
+        // OK, application et données à jour
+        self.etatApplication = 1;
+      }
+    } 
+    
+    // annonce que la vérificaiton est terminée
+    $("#eventManager").trigger('versionVerifiee');
+  }
+  
+  this.getEtatApplication = function(){
+    return self.etatApplication;
+  };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  function gotFSforCheckUpdate(fileSystem) {
+    console.log(fileSystem.name);
+    console.log(fileSystem.root);   
+    fileSystem.root.getFile("check-update.json", {create: true, exclusive: false}, gotFileEntryforCheckUpdate, failFile);    
+  }
+  function gotFileEntryforCheckUpdate(fileEntry) {
+    console.log(fileEntry);
+    console.log(fileEntry.name);
+    fileEntry.file(gotFileforCheckUpdate, fail);
+  }
+  function gotFileforCheckUpdate(file){
+    //readDataUrl(file);
+    readAsTextforCheckUpdate(file);
+  }
+  function readAsTextforCheckUpdate(file) {
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+      console.log("Read as text");
+      console.log(evt.target.result);
+    };
+    reader.readAsText(file);
+  }
+  function fail(error) {
+    console.log(error);
+    console.log(error.code);
+  }
+  function failFile(error) {
+    console.log(error);
+    console.log(error.code);
+    console.log("error getting file");
+  }
+  
+  
   
   this.miseAjourDonnees = function(){
     var etatDonnees = 0;
@@ -139,25 +166,19 @@ function Connexion() {
   
   // initalisation des tableaux de données
   this.initialiseDonnees = function() {
+    console.log("initialiseDonnees : start");
     entries = ['icon-new.jpg', 'icon-famille.jpg', 'icon-fun.jpg', 'icon-pro.jpg', 'icon-autre.jpg', 'icon-mes-infos.jpg'];
     entriesLabel = ['New', 'Famille', 'Fun','Pro', 'Autre', 'Mes Infos'];
-    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos'];  
+    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos']; 
+    console.log("initialiseDonnees : end"); 
+    
+    // annonce que la données sont chargées
+    $("#eventManager").trigger('initialiseDonneesReady');
   };
   
   
   function getAppVersion(){
     var appVersion = "1.0.0";
-    
-    // Get the data directory, creating it if it doesn't exist.
-    //var dataDir = fileSystem.root.getDirectory("json", {create: true});
-    // Create the appversion file, if and only if it doesn't exist.
-    //var appversionFile = dataDir.getFile("appversion.json", {create: true, exclusive: true});
-    
-    //var contents = readFileSynchronous(appversionFile);    
-    //console.log(contents);
-    
-    //var file = getFile(entry);
-    //var contents = readFile(file);
     
     return appVersion;
   };
@@ -166,62 +187,6 @@ function Connexion() {
     var dataVersion = "20131208.150000";
     
     return dataVersion;
-  };
-  
-  
-  /*
-  function readFileSynchronous(file) {
-    var reader = new FileReader();
-    waitFor(var evt) {
-      reader.onloaded = resume;
-      reader.readAsText(file);
-    }
-    return evt.target.result;
-  };
-  
-  function getFileSynchronous(entry) {
-    waitFor(var rv, success) {
-      entry.file(function(file) { resume(file, true); },
-                     function(err) { resume(err, false); });
-    }
-    if (!success) throw rv;
-    return rv;
-  };
-  */
-  
-  /**
-    * Wait until the test condition is true or a timeout occurs. Useful for waiting
-    * on a server response or for a ui change (fadeIn, etc.) to occur.
-    *
-    * @param testFx javascript condition that evaluates to a boolean,
-    * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
-    * as a callback function.
-    * @param onReady what to do when testFx condition is fulfilled,
-    * it can be passed in as a string (e.g.: "1 == 1" or "$('#bar').is(':visible')" or
-    * as a callback function.
-    * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
-    */
-   /*function waitFor(testFx, onReady, timeOutMillis) {
-       var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 3000, //< Default Max Timout is 3s
-           start = new Date().getTime(),
-           condition = false,
-           interval = setInterval(function() {
-               if ( (new Date().getTime() - start < maxtimeOutMillis) && !condition ) {
-                   // If not time-out yet and condition not yet fulfilled
-                   condition = (typeof(testFx) === "string" ? eval(testFx) : testFx()); //< defensive code
-               } else {
-                   if(!condition) {
-                       // If condition still not fulfilled (timeout but condition is 'false')
-                       console.log("'waitFor()' timeout");
-                       phantom.exit(1);
-                   } else {
-                       // Condition fulfilled (timeout and/or condition is 'true')
-                       console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
-                       typeof(onReady) === "string" ? eval(onReady) : onReady(); //< Do what it's supposed to do once the condition is fulfilled
-                       clearInterval(interval); //< Stop this interval
-                   }
-               }
-           }, 250); //< repeat check every 250ms
-   };*/
+  };  
   
 }

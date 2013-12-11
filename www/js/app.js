@@ -8,6 +8,6 @@ require.config({
     }
 });
 
-require(['jquery', 'meny', 'app/application', 'app/connexion', 'app/menu-navigation'], function ($, Meny, App, Connexion, MenuNavigation) {
+require(['jquery', 'meny', 'stroll', 'app/application', 'app/connexion', 'app/menu-navigation'], function ($, Meny, Stroll, App, Connexion, MenuNavigation) {
   app.initialize();
 });
