@@ -94,12 +94,9 @@ function MyApplication(){
     if(!connexion.verifieVersion())
     {
       $("#eventManager").off('versionVerifiee');
-      //@todo : affichage message pas de connectivité
-      console.log("[Alerte][pas de connectivité]");
+      notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');
       
       //initialise les Données depuis le cache
-      //@todo : initialise les Données
-      // charge les données du cache
       $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
       connexion.initialiseDonnees();
     }
@@ -109,24 +106,29 @@ function MyApplication(){
     $("#eventManager").off('versionVerifiee');
     // on teste la valeur de la verification
     var etatApplication = connexion.getEtatApplication();
-    console.log("etat Application : "+etatApplication);
     
     if(etatApplication >= 0)
     {
       // charge les données du cache
       $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
-      connexion.initialiseDonnees();
-      
+      if(!connexion.initialiseDonnees())
+      {
+        $("#eventManager").off('initialiseDonneesReady');
+        //initialise les Données depuis le cache
+        //@todo : initialise les Données
+        // charge les données du cache
+        // pour le moment on bloque en réclamant une connectivité
+        notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');        
+      }
+
     }else{
-      //@todo : affichage message erreur version de l'application périmée
-      console.log("[Erreur][version de l'application périmée]");
+      notificationMessage("Vous devez mettre à jour l'application pour pouvoir l'utiliser", goToStore, 'Application périmée', 'OK');
     }
     
   }
   
   function onInitialiseDonneesReady(){
     $("#eventManager").off('initialiseDonneesReady');
-    console.log("onInitialiseDonneesReady");
     // données chargées en local, lance UI
     initialiseUI(); 
   }
@@ -141,7 +143,7 @@ function MyApplication(){
     $("#eventManager").off('menuNavigationReady');
     navigator.splashscreen.hide();
     self.menuNav.ouvreMenu();
-    
+
     self.contenuPrincipal = new ContenuPrincipal();
     self.contenuPrincipal.initialise(self); 
     self.miseAjourContenu();  
@@ -150,6 +152,18 @@ function MyApplication(){
   this.miseAjourContenu = function(){   
     self.contenuPrincipal.chargeRubriqueActuelle();   
   };
+  
+  
+  
+  
+  function notificationMessage(message, callback, title, buttonName){
+    navigator.notification.alert(message, callback, title, buttonName);
+  }
+  
+  function goToStore(){
+    //@TODO : envoyer vers le store correspondant pour mettre à jour
+    console.log("envoyer vers le store correspondant pour mettre à jour");
+  }
   
 }
 

@@ -48,3 +48,4 @@ www/cordova*
 /www/requestFileSystem.js
 /www/resolveLocalFileSystemURI.js
 /www/network.js
+/www/plugins/
