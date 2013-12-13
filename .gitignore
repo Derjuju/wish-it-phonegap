@@ -5,3 +5,5 @@ www/cordova*
 /platforms
 /plugins
 /www/plugins
+spec.html
+/spec
