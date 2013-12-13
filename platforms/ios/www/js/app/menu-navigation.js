@@ -24,9 +24,16 @@ function MenuNavigation() {
   var menu = null;
   var menuSelector = null;
   var menuElements = null;
+  var largeurDevice;
+  var parent = null;
   
   // constructeur
   this.initialise = function() {
+    // largeur = 36% window or max = 228px
+  	largeurDevice = Math.ceil(window.innerWidth*0.36);
+  	if(largeurDevice > 228) largeurDevice = 228;
+  	
+  	
     
     self.menu = Meny.create({
       // The element that will be animated in from off screen
@@ -42,10 +49,13 @@ function MenuNavigation() {
       //height: 200,
 
       // [optional] The width of the menu (when using left/right position)
-      width: 228,
+      width: largeurDevice,
 
       // [optional] Distance from mouse (in pixels) when menu should open
-      threshold: window.innerWidth / 4
+      threshold: window.innerWidth / 4,
+      
+      // [optional] Distance that appear from the border (in pixels) when menu is closed
+      overlap: 10
     });
     
     // activation des listeners si jamais on les avait enlevés
@@ -66,8 +76,8 @@ function MenuNavigation() {
   // construction automatique
   self.initialise();
     
-  this.fabricationListeMenu = function() {
-    console.log("fabricationListeMenu");
+  this.fabricationListeMenu = function(_parent) {
+    self.parent = _parent;
     
     self.menuElements = $('.menu-list');
     
@@ -78,27 +88,41 @@ function MenuNavigation() {
       attributes += ' vignette';
       
       html += '<li class="' + attributes + '">';
-      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
+      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesLabel[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
       else { html +='<a href="'+entriesLink[i]+'">'+entriesLabel[i]+'</a>'; } 
       html +='</li>';
       
     }
     
     self.menuElements.html(html);
+    
+    if( IS_ANDROID ) {
+      $('body').addClass('android');
+    }
+    self.menuElements.find('li').each(function(){
+      $(this).removeClass('cache' );
+      $(this).css('width',largeurDevice+'px');
+      $(this).css('height',largeurDevice+'px');
+    });    
+    
     // Set the default effect
     self.menuElements.addClass('wave');
+    
+    this.updateHeight();
     
     // ajoute un click sur les éléments
     self.menuElements.find(".vignette a").each(function(){
       $(this).click(function(event){
         event.preventDefault();
         //if( $("html").attr("id") != "ie6" && $("html").attr("id") != "ie7" && $("html").attr("id") != "ie8" ){
-          //requeteAjaxMenuNav(this.href, true, this);
+          requeteAjaxMenuNav(this);
 	//}
       });
     });
-    var t=setTimeout(this.ouvreMenu,1000);
+    //var t=setTimeout(this.ouvreMenu,1000);
     
+    // annonce que le menu est prêt
+    $("#eventManager").trigger('menuNavigationReady');
   }
   
   this.ouvreMenu = function(){
@@ -110,10 +134,27 @@ function MenuNavigation() {
     self.menu.close();
   }
   
+  /**
+  * Updates the list height to match the window height for 
+  * the demo. Also re-binds the list with stroll.js.
+  */
   this.updateHeight = function() {
     self.menuElements.css('height',window.innerHeight + 'px');
-    //stroll.bind($(newsList));
+    stroll.bind($(self.menuElements));
   }
+  
+  
+  this.getItemMenu = function(indice) {
+    var itemMenu = self.menuElements.find('li').eq(indice).find('a');
+    
+    return itemMenu;
+  }
+  
+  function requeteAjaxMenuNav(itemMenu){
+    rubriqueActuelle = $(itemMenu).attr("data-indice");
+    self.parent.miseAjourContenu();
+  }
+  
   
   /**
   * Insere une image
@@ -125,7 +166,7 @@ function MenuNavigation() {
   }
   
   function synchroniseOuverture(){
-    console.log("synchroniseOuverture");
+    //console.log("synchroniseOuverture");
     swipeBindtoMeny();
   }
 
@@ -135,10 +176,10 @@ function MenuNavigation() {
   
   function swipeBindtoContent(){
     //self.menu.unbindEvents();
-}
+  }
 
   function swipeBindtoMeny(){
-    console.log("swipeBindtoMeny");
+    //console.log("swipeBindtoMeny");
     self.menu.bindEvents();
   }
   
@@ -152,4 +193,13 @@ function MenuNavigation() {
   function onSwipeRightContent( event ) {
     //alert("onSwipeRightContent");
   }
+  
+  
+  this.desactiveMenu = function(){
+    self.menu.unbindEvents();
+  }
+  this.activeMenu = function(){
+    self.menu.bindEvents();
+  }
+  
 }

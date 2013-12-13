@@ -33,7 +33,8 @@ var donneesJson;
 var rubriqueActuelle = 0;
 
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
-    IS_IPHONE = navigator.userAgent.match( /iphone/gi );
+    IS_IPHONE = navigator.userAgent.match( /iphone/gi ),
+    IS_IOS = navigator.userAgent.match( /(iPad|iPhone|iPod)/i );
     
 // url des services
 var webservice_version = "http://wishit.freetouch.fr/webservices/check-version.php";

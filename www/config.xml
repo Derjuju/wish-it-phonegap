@@ -28,8 +28,7 @@
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/file" />
     <feature name="http://api.phonegap.com/1.0/network" />
-    <feature name="http://api.phonegap.com/1.0/dialogs" />
-    <feature name="http://api.phonegap.com/1.0/vibration" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
     
     <!--
     <feature name="NetworkStatus">
@@ -51,6 +50,19 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
+    
+    
+    <feature name="SocialSharing">
+      <!-- for iOS -->
+      <param name="ios-package" value="SocialSharing" />   
+      <!-- for Android -->
+      <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </config-file>
+    
     
     <icon src="icon.png" />
     <icon gap:density="ldpi" gap:platform="android" src="res/icon/android/icon-36-ldpi.png" />

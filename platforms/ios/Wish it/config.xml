@@ -11,6 +11,28 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
+    <feature name="Vibration">
+        <param name="ios-package" value="CDVVibration" />
+    </feature>
+    <feature name="SocialSharing">
+        <param name="ios-package" value="SocialSharing" />
+    </feature>
     <access origin="*" />
     <access origin="http://freetouch.fr" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
@@ -37,27 +59,8 @@
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="auto-hide-splash-screen" value="false" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
-    <feature name="NetworkStatus">
-        <param name="ios-package" value="CDVConnection" />
-    </feature>
-    <feature name="Device">
-        <param name="ios-package" value="CDVDevice" />
-    </feature>
-    <feature name="FileTransfer">
-        <param name="ios-package" value="CDVFileTransfer" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="ios-package" value="CDVSplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Notification">
-        <param name="ios-package" value="CDVNotification" />
-    </feature>
-    <feature name="Vibration">
-        <param name="ios-package" value="CDVVibration" />
-    </feature>
 </widget>

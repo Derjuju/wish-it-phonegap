@@ -7,7 +7,6 @@
     <author email="support@freetouch.fr" href="http://freetouch.fr">
         Freetouch
     </author>
-    <feature name="http://api.phonegap.com/1.0/device" />
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.2.0" />
     <preference name="orientation" value="portrait" />
@@ -20,15 +19,39 @@
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="auto-hide-splash-screen" value="false" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
+    
+    
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/file" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/dialogs" />
+    <feature name="http://api.phonegap.com/1.0/vibration" />
+    
+    <!--
+    <feature name="NetworkStatus">
+      <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="File">
+      <param name="ios-package" value="CDVFile" />
+    </feature>
+    <feature name="FileTransfer">
+      <param name="ios-package" value="CDVFileTransfer" />
+    </feature>
+    //-->
+    
     <gap:plugin name="nl.x-services.plugins.socialsharing" />
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.vibration" />
+    
     <icon src="icon.png" />
     <icon gap:density="ldpi" gap:platform="android" src="res/icon/android/icon-36-ldpi.png" />
     <icon gap:density="mdpi" gap:platform="android" src="res/icon/android/icon-48-mdpi.png" />

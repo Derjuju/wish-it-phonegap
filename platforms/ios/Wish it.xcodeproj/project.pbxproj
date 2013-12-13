@@ -41,6 +41,7 @@
 		22C4E868FA3D4A2D920C1450 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5092F67C21B043B48592B935 /* CDVNotification.bundle */; };
 		1C9A7685B96C4BC394F05C3A /* AudioToolbox.framework in Resources */ = {isa = PBXBuildFile; fileRef = 9291D2B2420040E9A0B0254C /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		374D2DCE273448E591F409A4 /* CDVVibration.m in Sources */ = {isa = PBXBuildFile; fileRef = AB99574635904700B1DA78B7 /* CDVVibration.m */; };
+		46BED4F2E3C0453F90870E8A /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = F8851575C3264E8F8AB84C4F /* SocialSharing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		9291D2B2420040E9A0B0254C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		AB99574635904700B1DA78B7 /* CDVVibration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVVibration.m"; path = "org.apache.cordova.vibration/CDVVibration.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		D5A2A3E757954B5082C34A70 /* CDVVibration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVVibration.h"; path = "org.apache.cordova.vibration/CDVVibration.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		F8851575C3264E8F8AB84C4F /* SocialSharing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SocialSharing.m"; path = "nl.x-services.plugins.socialsharing/SocialSharing.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		E7D482A8A11747BF983AB2EC /* SocialSharing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SocialSharing.h"; path = "nl.x-services.plugins.socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +249,8 @@
 				6BCF38DB454A4A8FB99BF563 /* CDVNotification.h */,
 				AB99574635904700B1DA78B7 /* CDVVibration.m */,
 				D5A2A3E757954B5082C34A70 /* CDVVibration.h */,
+				F8851575C3264E8F8AB84C4F /* SocialSharing.m */,
+				E7D482A8A11747BF983AB2EC /* SocialSharing.h */,
 			);
 			name = Plugins;
 			path = "Wish it/Plugins";
@@ -421,6 +426,7 @@
 				03A39E6E21D84ED8AFC015BD /* CDVSplashScreen.m in Sources */,
 				E6B2120D496A41BC9C71740B /* CDVNotification.m in Sources */,
 				374D2DCE273448E591F409A4 /* CDVVibration.m in Sources */,
+				46BED4F2E3C0453F90870E8A /* SocialSharing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
