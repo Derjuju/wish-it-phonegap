@@ -78,7 +78,6 @@ function MenuNavigation() {
     
   this.fabricationListeMenu = function(_parent) {
     self.parent = _parent;
-    console.log("fabricationListeMenu");
     
     self.menuElements = $('.menu-list');
     
@@ -177,7 +176,7 @@ function MenuNavigation() {
   
   function swipeBindtoContent(){
     //self.menu.unbindEvents();
-}
+  }
 
   function swipeBindtoMeny(){
     //console.log("swipeBindtoMeny");
@@ -194,4 +193,13 @@ function MenuNavigation() {
   function onSwipeRightContent( event ) {
     //alert("onSwipeRightContent");
   }
+  
+  
+  this.desactiveMenu = function(){
+    self.menu.unbindEvents();
+  }
+  this.activeMenu = function(){
+    self.menu.bindEvents();
+  }
+  
 }

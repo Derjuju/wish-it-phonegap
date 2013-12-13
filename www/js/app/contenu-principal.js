@@ -23,6 +23,7 @@ function ContenuPrincipal() {
   var self = this;  
   var contenuSelector = null;
   var zoneContenuSelector = null;
+  var detailSelector = null;
   var parent = null;
   
   // constructeur
@@ -30,6 +31,7 @@ function ContenuPrincipal() {
     self.parent = _parent;
     self.contenuSelector = $('.mainContent');
     self.zoneContenuSelector = self.contenuSelector.find('.zoneContenu');
+    self.detailSelector = $('#detailManager');
     
     updateHeightInner();
     
@@ -81,10 +83,8 @@ function ContenuPrincipal() {
   }
   
   function insereVignette(elementVignette,indice,position){
-    var html = "";
-    
-    html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';
-    
+    var html = "";    
+    html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';    
     return html;
   }
   
@@ -103,38 +103,81 @@ function ContenuPrincipal() {
     }else{
       // click sur petite on agrandit
       vignette.parent().removeClass('small');
-      
-      //setTimeout(function(){ deplaceScrollbar(element); },800);      
       deplaceScrollbar(element);
     }    
   }
   
   function deplaceScrollbar(element)
   {
-    //var zoneCible = self.zoneContenuSelector.find('.visuels');
     var vignette = $(element);
-    /*var offset = vignette.offset();
-    //self.zoneContenuSelector.scrollTop(offset.top);
-    self.zoneContenuSelector.animate({'scrollTop':offset.top},500);*/
-    //var position = zoneCible.position();
     var decalage = 0;
     if(self.zoneContenuSelector.find('.messageWelcome').length > 0)
     {
       decalage = self.zoneContenuSelector.find('.messageWelcome').height();
     }
-    //console.log(self.zoneContenuSelector.find('.messageWelcome').height());
-    
     var distance = (vignette.attr('data-position')*vignette.height()) + decalage;
-    
-    //console.log(position.top+" et "+vignette.attr('data-position')+" et "+vignette.height());
-    
     self.zoneContenuSelector.animate({'scrollTop':distance},500);
     
   }
   
   function modePersonnalisation(element){
+    // désactive navigation
+    self.parent.menuNav.desactiveMenu();
+    
     var vignette = $(element);
     vignette.addClass('selected');
+    self.detailSelector.load('js/tpl/detail.html', function(){
+      // récuperation de la fiche de l'élément
+      var idElement = vignette.attr('data-id');
+      var elementVignette = donneesJson[idElement];
+            
+      var titre = elementVignette["texte"].split('<br>')[0];
+      
+      var imagePreview = cdn_visuel+'images/preview/'+elementVignette["preview"];
+      var imageVierge = cdn_visuel+'images/image/'+elementVignette["preview"];
+      
+      // customisation de la fiche detail
+      self.detailSelector.find('.titre').html('<h1>'+titre+'...</h1>');
+      self.detailSelector.find('.visuel').html('<img src="'+imagePreview+'" >');
+      
+      // liaison des boutons
+      self.detailSelector.find('.fermer a').bind('click', function(event){
+        event.preventDefault();
+        fermerDetail(element);
+      });
+      self.detailSelector.find('.envoyer a').bind('click', function(event){
+        event.preventDefault();
+        ouvreChoixPartage(element,idElement);
+      });
+      
+      self.detailSelector.addClass('affiche');
+      self.detailSelector.height(window.innerHeight);
+      self.detailSelector.animate({'opacity':1},500);
+    });
+  }
+  
+  function fermerDetail(element){
+    // désactive navigation
+    self.parent.menuNav.activeMenu();
+    
+    var vignette = $(element);
+    vignette.removeClass('selected');
+    
+    self.detailSelector.animate({'opacity':0},500, function(){
+      self.detailSelector.removeClass('affiche');
+      
+      self.detailSelector.find('.fermer a').unbind('click');
+      
+      //vide detail
+      self.detailSelector.html('');
+    });
+  }
+  
+  function ouvreChoixPartage(element,idElement){
+    var vignette = $(element);
+    var elementVignette = donneesJson[idElement];
+    
+    
     
   }
   
