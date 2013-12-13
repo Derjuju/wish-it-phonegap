@@ -2,7 +2,7 @@
 <widget id="fr.freetouch.wishit" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Wish it</name>
     <description>
-        Send wishes to your contacts.
+        Envoyez vos voeux et bonnes résolutions à vos amis...
     </description>
     <author email="support@freetouch.fr" href="http://freetouch.fr">
         Freetouch
