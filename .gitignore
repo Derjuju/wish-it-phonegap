@@ -2,3 +2,6 @@
 .DS_Store
 www/cordova*
 /nbproject/private/
+/platforms
+/plugins
+/www/plugins
