@@ -167,9 +167,26 @@ function Connexion() {
   // initalisation des tableaux de données
   this.initialiseDonnees = function() {
     console.log("initialiseDonnees : start");
-    entries = ['icon-new.jpg', 'icon-famille.jpg', 'icon-fun.jpg', 'icon-pro.jpg', 'icon-autre.jpg', 'icon-mes-infos.jpg'];
+    
+    var stringJSon = '{"menu":[{"id":0,"label":"new","icon":"icon-new.jpg"},{"id":1,"label":"famille","icon":"icon-famille.jpg"},{"id":2,"label":"fun","icon":"icon-fun.jpg"},{"id":3,"label":"pro","icon":"icon-pro.jpg"},{"id":4,"label":"autre","icon":"icon-autre.jpg"},{"id":-1,"label":"mes-infos","icon":"icon-mes-infos.jpg"}],"contenu":[{"id":1,"cat":"0,1","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":2,"cat":"0,1","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":3,"cat":"0,2","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":4,"cat":"0,2","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":5,"cat":"0,2","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":6,"cat":"0,3","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":7,"cat":"0,3","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":8,"cat":"0,3","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":9,"cat":"0,3","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":10,"cat":"4","preview":"requin.jpg","image":"requin2.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"}]}';
+    
+    var objMenu = JSON.parse(stringJSon);
+    
+    donneesJson = objMenu["contenu"];
+    
+    entries = new Array();
+    entriesLabel = new Array();
+    entriesLink = new Array();
+    for(var i = 0; i<objMenu["menu"].length; i++)
+    {
+      entries.push(objMenu["menu"][i]["icon"]);
+      entriesLabel.push(objMenu["menu"][i]["label"]);
+      entriesLink.push('#'+objMenu["menu"][i]["id"]);
+    }
+    
+    /*entries = ['icon-new.jpg', 'icon-famille.jpg', 'icon-fun.jpg', 'icon-pro.jpg', 'icon-autre.jpg', 'icon-mes-infos.jpg'];
     entriesLabel = ['New', 'Famille', 'Fun','Pro', 'Autre', 'Mes Infos'];
-    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos']; 
+    entriesLink = ['#New', '#Famille', '#Fun', '#Pro', '#Autre', '#MesInfos']; */
     console.log("initialiseDonnees : end"); 
     
     // annonce que la données sont chargées

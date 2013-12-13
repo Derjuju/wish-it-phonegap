@@ -28,13 +28,18 @@
 //---------------------------------
 var myApp;
 var entries, entriesLink, entriesLabel;
+var donneesJson;
+
+var rubriqueActuelle = 0;
 
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IPHONE = navigator.userAgent.match( /iphone/gi );
     
 // url des services
-var webservice_version = "http://localhost:8888/phonegap/wish-it/webservices/check-version.php";
-var webservice_update = "http://localhost:8888/phonegap/wish-it/webservices/update.php";
+var webservice_version = "http://wishit.freetouch.fr/webservices/check-version.php";
+var webservice_update = "http://wishit.freetouch.fr/webservices/update.php";
+
+var cdn_visuel = "http://wishit.freetouch.fr/webservices/";
 
 
 //---------------------------------
@@ -128,33 +133,23 @@ function MyApplication(){
   
   function initialiseUI() {
     $("#eventManager").on('menuNavigationReady', function() { onMenuNavigationReady(); } );
-    menuNav = new MenuNavigation();
-    menuNav.fabricationListeMenu();
+    self.menuNav = new MenuNavigation();
+    self.menuNav.fabricationListeMenu(self);
   }  
   
   function onMenuNavigationReady(){
     $("#eventManager").off('menuNavigationReady');
     navigator.splashscreen.hide();
-    menuNav.ouvreMenu();
+    self.menuNav.ouvreMenu();
     
-    updateHeightInner();
-    
-    
-    
+    self.contenuPrincipal = new ContenuPrincipal();
+    self.contenuPrincipal.initialise(self); 
+    self.miseAjourContenu();  
   }
   
-  
-  // à déplacer dans la partie gestion de contenu
-  function updateHeightInner() {
-    //newsList.style.height = window.innerHeight + 'px';
-    //$(newsList).css('height',(window.innerHeight - 220) + 'px');
-    $(".mainContent").height(window.innerHeight);
-    $(".mainContent").width((window.innerWidth - 10));
-    $(".mainContent").css('margin-left','10px');
-    
-    //$(newsListInner).css('height',window.innerHeight + 'px');	
-    //stroll.bind( $(newsListInner));
-  }
+  this.miseAjourContenu = function(){   
+    self.contenuPrincipal.chargeRubriqueActuelle();   
+  };
   
 }
 

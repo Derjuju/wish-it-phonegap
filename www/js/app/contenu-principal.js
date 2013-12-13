@@ -18,165 +18,132 @@
  */
 
 //******************************
-// Class MenuNavigation
-function MenuNavigation() {
-  var self = this;
-  var menu = null;
-  var menuSelector = null;
-  var menuElements = null;
-  var largeurDevice;
+// Class ContenuPrincipal
+function ContenuPrincipal() {
+  var self = this;  
+  var contenuSelector = null;
+  var zoneContenuSelector = null;
+  var parent = null;
   
   // constructeur
-  this.initialise = function() {
-    // largeur = 36% window or max = 228px
-  	largeurDevice = Math.ceil(window.innerWidth*0.36);
-  	if(largeurDevice > 228) largeurDevice = 228;
-  	
-  	
+  this.initialise = function(_parent) {
+    self.parent = _parent;
+    self.contenuSelector = $('.mainContent');
+    self.zoneContenuSelector = self.contenuSelector.find('.zoneContenu');
     
-    self.menu = Meny.create({
-      // The element that will be animated in from off screen
-      menuElement: document.querySelector( '.navigation'), 
-      
-      //The contents that gets pushed aside while Meny is active
-      contentsElement: document.querySelector( '.contents' ),
-      
-      // [optional] The alignment of the menu (top/right/bottom/left)
-      position: Meny.getQuery().p || 'left',
-      
-      // [optional] The height of the menu (when using top/bottom position)
-      //height: 200,
-
-      // [optional] The width of the menu (when using left/right position)
-      width: largeurDevice,
-
-      // [optional] Distance from mouse (in pixels) when menu should open
-      threshold: window.innerWidth / 4,
-      
-      // [optional] Distance that appear from the border (in pixels) when menu is closed
-      overlap: 10
-    });
+    updateHeightInner();
     
-    // activation des listeners si jamais on les avait enlevés
-    self.menu.bindEvents();
-    
-    self.menuSelector = $('.navigation');
-    
-    // ajout des listeners sur les actions du menu
-    //Meny.dispatchEvent( dom.menu, 'open' );
-    self.menuSelector.on('open', function(event) {
-      synchroniseOuverture();
-    });
-    self.menuSelector.on('close', function(event) {
-      synchroniseFermeture();
-    });   
-  }; 
+    //charge affichage de la rubrique Actuelle;
+    this.chargeRubriqueActuelle();
+  };
   
-  // construction automatique
-  self.initialise();
+  this.chargeRubriqueActuelle = function(){
+    //self.parent.menuNav.fermeMenu();
+    //navigator.notification.loadingStart();
+    //href data-tpl data-id
+    var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
     
-  this.fabricationListeMenu = function() {
-    console.log("fabricationListeMenu");
+    var templateAAfficher = "";
     
-    self.menuElements = $('.menu-list');
-    
-    var html = '';
-    
-    for( var i = 0, len = entries.length; i < len; i++ ) {
-      var attributes = IS_ANDROID ? 'cache' : '';	
-      attributes += ' vignette';
-      
-      html += '<li class="' + attributes + '">';
-      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
-      else { html +='<a href="'+entriesLink[i]+'">'+entriesLabel[i]+'</a>'; } 
-      html +='</li>';
-      
+    if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
+      templateAAfficher = itemMenu.attr('data-tpl')+'.html';
+    }else{
+      templateAAfficher = 'liste.html';
     }
     
-    self.menuElements.html(html);
-    
-    if( IS_ANDROID ) {
-      $('body').addClass('android');
-    }
-    self.menuElements.find('li').each(function(){
-      $(this).removeClass('cache' );
-      $(this).css('width',largeurDevice+'px');
-      $(this).css('height',largeurDevice+'px');
-    });    
-    
-    // Set the default effect
-    self.menuElements.addClass('wave');
-    
-    this.updateHeight();
-    
-    // ajoute un click sur les éléments
-    self.menuElements.find(".vignette a").each(function(){
-      $(this).click(function(event){
-        event.preventDefault();
-        //if( $("html").attr("id") != "ie6" && $("html").attr("id") != "ie7" && $("html").attr("id") != "ie8" ){
-          //requeteAjaxMenuNav(this.href, true, this);
-	//}
-      });
+    self.zoneContenuSelector.load('js/tpl/'+templateAAfficher, function(){
+      //navigator.notification.loadingStop();
+      contenuRempli();
     });
-    //var t=setTimeout(this.ouvreMenu,1000);
-    
-    // annonce que le menu est prêt
-    $("#eventManager").trigger('menuNavigationReady');
-  }
+  };
   
-  this.ouvreMenu = function(){
-    console.log("ouvreMenu");
-    self.menu.open();
-  }
-  
-  this.fermeMenu = function(){
-    self.menu.close();
-  }
-  
-  /**
-  * Updates the list height to match the window height for 
-  * the demo. Also re-binds the list with stroll.js.
-  */
-  this.updateHeight = function() {
-    self.menuElements.css('height',window.innerHeight + 'px');
-    stroll.bind($(self.menuElements));
-  }
-  
-  /**
-  * Insere une image
-  * 
-  * @param {String} type source de l'image
-  */
-  function insereBigVignette( srcImage, lblImage ) {
-    return '<img src="img/menu/'+ srcImage +'"><div class="labelImage">'+lblImage+'</div>';
-  }
-  
-  function synchroniseOuverture(){
-    //console.log("synchroniseOuverture");
-    swipeBindtoMeny();
-  }
-
-  function synchroniseFermeture(){
-    swipeBindtoContent();
-  }
-  
-  function swipeBindtoContent(){
-    //self.menu.unbindEvents();
-}
-
-  function swipeBindtoMeny(){
-    //console.log("swipeBindtoMeny");
-    self.menu.bindEvents();
-  }
-  
-  function onSwipeLeftContent( event ) {
-    //alert("onSwipeLeftContent");
-    if(!self.menu.isOpen())
+  function contenuRempli(){ 
+    var rubriqueCherchee = ""+rubriqueActuelle;
+    var zoneCible = self.zoneContenuSelector.find('.visuels');
+    zoneCible.addClass('small');
+    var html = "";
+    var position = 0;
+    for(var i = 0; i<donneesJson.length; i++)
     {
-      self.menu.open();
+      var cat = donneesJson[i]['cat'];
+      if($.inArray(rubriqueCherchee, cat) > -1)
+      {
+        html += insereVignette(donneesJson[i],i,position);
+        position++;
+      }
     }
+    
+    zoneCible.html(html);
+    
+    zoneCible.find('img').bind('click', function(){ clickSurVignette(this); });
+    
+    contenuPret();
   }
-  function onSwipeRightContent( event ) {
-    //alert("onSwipeRightContent");
+  
+  function insereVignette(elementVignette,indice,position){
+    var html = "";
+    
+    html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';
+    
+    return html;
+  }
+  
+  function contenuPret(){    
+    updateHeightInner();
+    self.zoneContenuSelector.scrollTop(0);
+    // lance fermeture menu
+    self.parent.menuNav.fermeMenu();  
+  }
+  
+  function clickSurVignette(element){
+    var vignette = $(element);
+    if(!vignette.parent().hasClass('small'))
+    {
+      modePersonnalisation(element);
+    }else{
+      // click sur petite on agrandit
+      vignette.parent().removeClass('small');
+      
+      //setTimeout(function(){ deplaceScrollbar(element); },800);      
+      deplaceScrollbar(element);
+    }    
+  }
+  
+  function deplaceScrollbar(element)
+  {
+    //var zoneCible = self.zoneContenuSelector.find('.visuels');
+    var vignette = $(element);
+    /*var offset = vignette.offset();
+    //self.zoneContenuSelector.scrollTop(offset.top);
+    self.zoneContenuSelector.animate({'scrollTop':offset.top},500);*/
+    //var position = zoneCible.position();
+    var decalage = 0;
+    if(self.zoneContenuSelector.find('.messageWelcome').length > 0)
+    {
+      decalage = self.zoneContenuSelector.find('.messageWelcome').height();
+    }
+    //console.log(self.zoneContenuSelector.find('.messageWelcome').height());
+    
+    var distance = (vignette.attr('data-position')*vignette.height()) + decalage;
+    
+    //console.log(position.top+" et "+vignette.attr('data-position')+" et "+vignette.height());
+    
+    self.zoneContenuSelector.animate({'scrollTop':distance},500);
+    
+  }
+  
+  function modePersonnalisation(element){
+    var vignette = $(element);
+    vignette.addClass('selected');
+    
+  }
+  
+  // à déplacer dans la partie gestion de contenu
+  function updateHeightInner() {
+    self.contenuSelector.height(window.innerHeight);
+    self.contenuSelector.width((window.innerWidth - 10));
+    self.contenuSelector.css('margin-left','10px');
+    
+    self.zoneContenuSelector.height(window.innerHeight);
   }
 }

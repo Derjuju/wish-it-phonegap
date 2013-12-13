@@ -25,6 +25,7 @@ function MenuNavigation() {
   var menuSelector = null;
   var menuElements = null;
   var largeurDevice;
+  var parent = null;
   
   // constructeur
   this.initialise = function() {
@@ -75,7 +76,8 @@ function MenuNavigation() {
   // construction automatique
   self.initialise();
     
-  this.fabricationListeMenu = function() {
+  this.fabricationListeMenu = function(_parent) {
+    self.parent = _parent;
     console.log("fabricationListeMenu");
     
     self.menuElements = $('.menu-list');
@@ -87,7 +89,7 @@ function MenuNavigation() {
       attributes += ' vignette';
       
       html += '<li class="' + attributes + '">';
-      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
+      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesLabel[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
       else { html +='<a href="'+entriesLink[i]+'">'+entriesLabel[i]+'</a>'; } 
       html +='</li>';
       
@@ -114,7 +116,7 @@ function MenuNavigation() {
       $(this).click(function(event){
         event.preventDefault();
         //if( $("html").attr("id") != "ie6" && $("html").attr("id") != "ie7" && $("html").attr("id") != "ie8" ){
-          //requeteAjaxMenuNav(this.href, true, this);
+          requeteAjaxMenuNav(this);
 	//}
       });
     });
@@ -141,6 +143,19 @@ function MenuNavigation() {
     self.menuElements.css('height',window.innerHeight + 'px');
     stroll.bind($(self.menuElements));
   }
+  
+  
+  this.getItemMenu = function(indice) {
+    var itemMenu = self.menuElements.find('li').eq(indice).find('a');
+    
+    return itemMenu;
+  }
+  
+  function requeteAjaxMenuNav(itemMenu){
+    rubriqueActuelle = $(itemMenu).attr("data-indice");
+    self.parent.miseAjourContenu();
+  }
+  
   
   /**
   * Insere une image

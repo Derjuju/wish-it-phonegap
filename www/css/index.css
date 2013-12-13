@@ -228,3 +228,41 @@ body {
   height: 100%;
   overflow:hidden;
 }
+
+.mainContent .zoneContenu{  
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.mainContent .messageWelcome{
+  width:90%;
+  margin:0 auto;
+}
+.mainContent .messageWelcome h1{
+  font-weight: normal;
+  text-transform: none;
+  font-size: 33px;
+  margin-top: 0px;
+  padding-top: 22px;
+}
+.mainContent .messageWelcome p{
+  font-size: 20px;
+  text-transform: none;
+}
+
+.mainContent .visuels{
+  position:relative;
+  clear:both;  
+}
+
+.mainContent .visuels img{
+  width:100%;
+  float:left;
+}
+.mainContent .visuels.small img{
+  width:50%;
+}
+
+.mainContent .visuels img.selected{
+  
+}
