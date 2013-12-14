@@ -59,7 +59,7 @@ function MenuNavigation() {
     });
     
     // activation des listeners si jamais on les avait enlevés
-    //self.menu.bindEvents();
+    self.menu.bindEvents();
     
     self.menuSelector = $('.navigation');
     
@@ -179,12 +179,12 @@ function MenuNavigation() {
   }
   
   function swipeBindtoContent(){
-    //self.menu.unbindEvents();
+    self.menu.unbindEvents();
   }
 
   function swipeBindtoMeny(){
     //console.log("swipeBindtoMeny");
-    //self.menu.bindEvents();
+    self.menu.bindEvents();
   }
   
   function onSwipeLeftContent( event ) {
