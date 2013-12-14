@@ -59,7 +59,7 @@ function MenuNavigation() {
     });
     
     // activation des listeners si jamais on les avait enlevés
-    //self.menu.bindEvents();
+    self.menu.bindEvents();
     
     self.menuSelector = $('.navigation');
     
@@ -200,10 +200,10 @@ function MenuNavigation() {
   
   
   this.desactiveMenu = function(){
-    //self.menu.unbindEvents();
+    self.menu.unbindEvents();
   }
   this.activeMenu = function(){
-    //self.menu.bindEvents();
+    self.menu.bindEvents();
   }
   
   this.simuleClickNavigation = function(indice){
