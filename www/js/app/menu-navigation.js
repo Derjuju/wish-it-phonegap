@@ -52,14 +52,14 @@ function MenuNavigation() {
       width: largeurDevice,
 
       // [optional] Distance from mouse (in pixels) when menu should open
-      threshold: window.innerWidth / 4,
+      threshold: window.innerWidth / 3,
       
       // [optional] Distance that appear from the border (in pixels) when menu is closed
       overlap: 10
     });
     
     // activation des listeners si jamais on les avait enlevés
-    self.menu.bindEvents();
+    //self.menu.bindEvents();
     
     self.menuSelector = $('.navigation');
     
@@ -139,8 +139,12 @@ function MenuNavigation() {
   * the demo. Also re-binds the list with stroll.js.
   */
   this.updateHeight = function() {
-    self.menuElements.css('height',window.innerHeight + 'px');
-    stroll.bind($(self.menuElements));
+    //self.menuElements.css('height',window.innerHeight + 'px');
+    //stroll.bind($(self.menuElements));
+    
+    $(".fondListe").height(window.innerHeight);
+    $(".mainContent").height(window.innerHeight);
+    
   }
   
   
@@ -180,7 +184,7 @@ function MenuNavigation() {
 
   function swipeBindtoMeny(){
     //console.log("swipeBindtoMeny");
-    self.menu.bindEvents();
+    //self.menu.bindEvents();
   }
   
   function onSwipeLeftContent( event ) {

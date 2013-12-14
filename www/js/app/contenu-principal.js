@@ -26,12 +26,16 @@ function ContenuPrincipal() {
   var detailSelector = null;
   var parent = null;
   
+  var premierChargement;
+  
   // constructeur
   this.initialise = function(_parent) {
     self.parent = _parent;
     self.contenuSelector = $('.mainContent');
     self.zoneContenuSelector = self.contenuSelector.find('.zoneContenu');
     self.detailSelector = $('#detailManager');
+    
+    self.premierChargement = true;
     
     updateHeightInner();
     
@@ -88,11 +92,16 @@ function ContenuPrincipal() {
     return html;
   }
   
-  function contenuPret(){    
+  function contenuPret(){ 
+    console.log("contenuPret");
+    self.zoneContenuSelector.scrollTop(0);  
     updateHeightInner();
-    self.zoneContenuSelector.scrollTop(0);
-    // lance fermeture menu
-    self.parent.menuNav.fermeMenu();  
+    if(self.premierChargement){
+      self.premierChargement = false;
+    }else{
+      // lance fermeture menu
+      self.parent.menuNav.fermeMenu();  
+    }
   }
   
   function clickSurVignette(element){
@@ -220,5 +229,9 @@ function ContenuPrincipal() {
     self.contenuSelector.css('margin-left','10px');
     
     self.zoneContenuSelector.height(window.innerHeight);
+    
+    $("#wrapper").height(window.innerHeight);
+	
+    myScroll = new iScroll('wrapper', { zoom:true });
   }
 }

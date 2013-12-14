@@ -32,6 +32,8 @@ var donneesJson;
 
 var rubriqueActuelle = 0;
 
+var myScroll;
+
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IPHONE = navigator.userAgent.match( /iphone/gi ),
     IS_IOS = navigator.userAgent.match( /(iPad|iPhone|iPod)/i );
@@ -87,7 +89,7 @@ function MyApplication(){
   
   // constructeur
   this.initialise = function() {
-    navigator.splashscreen.show();
+    //navigator.splashscreen.show();
     connexion = new Connexion();    
     
     $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );
@@ -147,7 +149,7 @@ function MyApplication(){
 
     self.contenuPrincipal = new ContenuPrincipal();
     self.contenuPrincipal.initialise(self); 
-    self.miseAjourContenu();  
+    //self.miseAjourContenu();  
   }
   
   this.miseAjourContenu = function(){   
