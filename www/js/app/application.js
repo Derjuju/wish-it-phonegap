@@ -39,6 +39,7 @@ var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IOS = navigator.userAgent.match( /(iPad|iPhone|iPod)/i );
     
 // url des services
+var website_app = "http://wishit.freetouch.fr";
 var webservice_version = "http://wishit.freetouch.fr/webservices/check-version.php";
 var webservice_update = "http://wishit.freetouch.fr/webservices/update.php";
 
@@ -70,10 +71,18 @@ var app = {
     onDeviceReady: function() {
         myApp = new MyApplication();
         
+        // masque la barre de status sous iOS7
+        if(IS_IOS){
+          if (StatusBar.isVisible) {
+            StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
+            StatusBar.hide();          
+          }
+        }
+        
         // simulation du chargement
-        setTimeout(function() { myApp.initialise(); }, 1000);
+        //setTimeout(function() { myApp.initialise(); }, 1000);
         // pour la prod : 
-        //myApp.initialise();
+        myApp.initialise();
         
     }
 };
@@ -145,6 +154,17 @@ function MyApplication(){
   function onMenuNavigationReady(){
     $("#eventManager").off('menuNavigationReady');
     navigator.splashscreen.hide();
+    
+    
+    // masque la barre de status sous iOS7
+        if(IS_IOS){
+          if (StatusBar.isVisible) {
+            StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
+            StatusBar.hide();          
+          }
+        }
+    
+    
     self.menuNav.ouvreMenu();
 
     self.contenuPrincipal = new ContenuPrincipal();
