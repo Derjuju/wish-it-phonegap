@@ -139,11 +139,14 @@ function MenuNavigation() {
   * the demo. Also re-binds the list with stroll.js.
   */
   this.updateHeight = function() {
-    self.menuElements.css('height',window.innerHeight + 'px');
-    stroll.bind($(self.menuElements));
+    //self.menuElements.css('height',window.innerHeight + 'px');
+    //stroll.bind($(self.menuElements));
     
     $(".fondListe").height(window.innerHeight);
     $(".mainContent").height(window.innerHeight);
+    
+    $("#wrapperMenu").height(window.innerHeight);	
+    myScrollMenu = new iScroll('wrapperMenu', { zoom:true });
     
   }
   

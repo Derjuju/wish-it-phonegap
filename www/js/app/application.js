@@ -33,7 +33,7 @@ var donneesJson;
 
 var rubriqueActuelle = 0;
 
-var myScroll;
+var myScroll, myScrollMenu;
 
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IPHONE = navigator.userAgent.match( /iphone/gi ),
@@ -174,14 +174,14 @@ function MyApplication(){
     
     self.menuNav.ouvreMenu();
 
-    /*self.contenuPrincipal = new ContenuPrincipal();
+    self.contenuPrincipal = new ContenuPrincipal();
     self.contenuPrincipal.initialise(self); 
     //self.miseAjourContenu(); 
-    self.menuNav.simuleClickNavigation(rubriqueActuelle);*/
+    self.menuNav.simuleClickNavigation(rubriqueActuelle);
   }
   
   this.miseAjourContenu = function(){   
-    //self.contenuPrincipal.chargeRubriqueActuelle();   
+    self.contenuPrincipal.chargeRubriqueActuelle();   
   };
   
   
