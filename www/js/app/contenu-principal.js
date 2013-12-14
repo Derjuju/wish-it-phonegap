@@ -48,21 +48,22 @@ function ContenuPrincipal() {
   this.chargeRubriqueActuelle = function(){
     //self.parent.menuNav.fermeMenu();
     //navigator.notification.loadingStart();
-    //href data-tpl data-id
-    var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
+      //href data-tpl data-id
+      var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
+
+      var templateAAfficher = "";
+
+      if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
+        templateAAfficher = itemMenu.attr('data-tpl')+'.html';
+      }else{
+        templateAAfficher = 'liste.html';
+      }
+
+      self.zoneContenuSelector.load('js/tpl/'+templateAAfficher, function(){
+        //navigator.notification.loadingStop();
+        contenuRempli();
+      });
     
-    var templateAAfficher = "";
-    
-    if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
-      templateAAfficher = itemMenu.attr('data-tpl')+'.html';
-    }else{
-      templateAAfficher = 'liste.html';
-    }
-    
-    self.zoneContenuSelector.load('js/tpl/'+templateAAfficher, function(){
-      //navigator.notification.loadingStop();
-      contenuRempli();
-    });
   };
   
   function contenuRempli(){ 

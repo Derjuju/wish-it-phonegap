@@ -142,7 +142,7 @@ function MenuNavigation() {
     //self.menuElements.css('height',window.innerHeight + 'px');
     //stroll.bind($(self.menuElements));
     
-    $(".fondListe").height(window.innerHeight);
+    //$(".fondListe").height(window.innerHeight);
     $(".mainContent").height(window.innerHeight);
     
     $("#wrapperMenu").height(window.innerHeight);	
