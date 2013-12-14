@@ -176,7 +176,9 @@ function MyApplication(){
 
     self.contenuPrincipal = new ContenuPrincipal();
     self.contenuPrincipal.initialise(self); 
-    self.miseAjourContenu();  
+    //self.miseAjourContenu();  
+    //$().trigger('click');
+    self.menuNav.simuleClickNavigation(rubriqueActuelle);
   }
   
   this.miseAjourContenu = function(){   
