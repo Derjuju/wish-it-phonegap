@@ -194,6 +194,8 @@ function ContenuPrincipal() {
         socialShare.available(function(isAvailable) {
           if (isAvailable) {
             console.log("plugin social sharing : dispo");
+            var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+            window.plugins.socialsharing.share(null, null, imageToShare);
           }else{
             console.log("plugin social sharing : non dispo");
           }
@@ -228,7 +230,7 @@ function ContenuPrincipal() {
     self.contenuSelector.width((window.innerWidth - 10));
     self.contenuSelector.css('margin-left','10px');
     
-    self.zoneContenuSelector.height(window.innerHeight);
+    //self.zoneContenuSelector.height(window.innerHeight);
     
     $("#wrapper").height(window.innerHeight);
 	

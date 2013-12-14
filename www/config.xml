@@ -27,7 +27,7 @@
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
     <!--<preference name="splash-screen-duration" value="10000"/> -->
     
-    <preference name="webviewbounce" value="true" />
+    <preference name="webviewbounce" value="false" />
     <preference name="stay-in-webview" value="false" />
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="false" />
