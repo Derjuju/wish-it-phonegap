@@ -42,7 +42,7 @@ function ContenuPrincipal() {
     updateHeightInner();
     
     //charge affichage de la rubrique Actuelle;
-    this.chargeRubriqueActuelle();
+    //this.chargeRubriqueActuelle();
   };
   
   this.chargeRubriqueActuelle = function(){

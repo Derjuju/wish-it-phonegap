@@ -20,7 +20,7 @@
 //---------------------------------
 // DEPENDANCES
 //---------------------------------
-
+var APP_PROD = false;//true;
 
 
 //---------------------------------
@@ -72,10 +72,13 @@ var app = {
         myApp = new MyApplication();
         
         // masque la barre de status sous iOS7
-        if(IS_IOS){
-          if (StatusBar.isVisible) {
-            StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
-            StatusBar.hide();          
+        if(IS_IOS){  
+          if(APP_PROD)
+          {
+            if (StatusBar.isVisible) {
+              StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
+              StatusBar.hide();          
+            }
           }
         }
         
@@ -158,9 +161,12 @@ function MyApplication(){
     
     // masque la barre de status sous iOS7
         if(IS_IOS){
-          if (StatusBar.isVisible) {
-            StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
-            StatusBar.hide();          
+          if(APP_PROD)
+          {
+            if (StatusBar.isVisible) {
+              StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
+              StatusBar.hide();          
+            }
           }
         }
     
@@ -169,7 +175,7 @@ function MyApplication(){
 
     self.contenuPrincipal = new ContenuPrincipal();
     self.contenuPrincipal.initialise(self); 
-    //self.miseAjourContenu();  
+    self.miseAjourContenu();  
   }
   
   this.miseAjourContenu = function(){   
