@@ -52,7 +52,7 @@ function MenuNavigation() {
       width: largeurDevice,
 
       // [optional] Distance from mouse (in pixels) when menu should open
-      threshold: window.innerWidth / 3,
+      threshold: window.innerWidth / 4,
       
       // [optional] Distance that appear from the border (in pixels) when menu is closed
       overlap: 10

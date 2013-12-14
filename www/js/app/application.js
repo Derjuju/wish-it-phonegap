@@ -181,7 +181,7 @@ function MyApplication(){
   }
   
   this.miseAjourContenu = function(){   
-    self.contenuPrincipal.chargeRubriqueActuelle();   
+    //self.contenuPrincipal.chargeRubriqueActuelle();   
   };
   
   

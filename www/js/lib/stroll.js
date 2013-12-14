@@ -430,8 +430,13 @@
 		if( Date.now() - this.touch.lastMove > 200 || Math.abs( this.touch.previous - this.touch.value ) < 5 ) {
 			this.velocity = 0;
 			
-			if(swipeMethod==null)
+			if(swipeMethod==null){
 				jQuery(vignetteTouch).click();			
+                                alert("this.touch.value : "+this.touch.value);
+                                for( var i = 0, len = this.items.length; i < len; i++ ) {
+                                  alert(i+" : "+item._offsetTop+" / "+item._offsetBottom);
+                                }
+                        }
 		}
 		
 		vignetteTouch = null;
