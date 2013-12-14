@@ -76,8 +76,8 @@
     <icon gap:platform="winphone" gap:role="background" src="res/icon/windows-phone/icon-173.png" />
     
     
-    <gap:splash src="splash.png" />
-    <gap:splash src="splash-568h-2x.png" height="1136" width="640" />
+    <!--<gap:splash src="splash.png" />
+    <gap:splash src="splash-568h-2x.png" height="1136" width="640" />-->
     
     <gap:splash gap:density="ldpi" gap:platform="android" src="res/screen/android/screen-ldpi-portrait.png" />
     <gap:splash gap:density="mdpi" gap:platform="android" src="res/screen/android/screen-mdpi-portrait.png" />
