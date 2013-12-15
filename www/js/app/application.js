@@ -105,6 +105,8 @@ function MyApplication(){
     //navigator.splashscreen.show();
     connexion = new Connexion();    
     
+    document.body.addEventListener('touchmove', function(event) {event.preventDefault();}, false);
+    
     $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );
     
     if(!connexion.verifieVersion())
