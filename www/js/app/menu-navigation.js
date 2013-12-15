@@ -158,7 +158,6 @@ function MenuNavigation() {
   }
   
   function requeteAjaxMenuNav(itemMenu){
-    alert(window.innerWidth+" et "+$('body').width());
     rubriqueActuelle = $(itemMenu).attr("data-indice");
     self.parent.miseAjourContenu();
   }

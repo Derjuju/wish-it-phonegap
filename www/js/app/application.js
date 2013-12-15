@@ -106,6 +106,8 @@ function MyApplication(){
     connexion = new Connexion();    
     
     document.body.addEventListener('touchmove', function(event) {event.preventDefault();}, false);
+    $("#app").css('width',window.innerWidth+"px");
+    $("#app").css('height',window.innerHeight+"px");
     
     $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );
     
