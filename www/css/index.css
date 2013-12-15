@@ -233,17 +233,22 @@ body {
 }
 
 body.menuOuvert .contents {
-  background: #FF0000;
   width:85%;
 }
 
 .mainContent{
   position:relative;
-  z-index:3;
-  width: 100%;
+  z-index:1;
+  width:97%;
+  margin-left:3%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+body.menuOuvert .mainContent {
+  margin-left:0%;
+  width: 100%;
 }
 
 .mainContent .zoneContenu{  

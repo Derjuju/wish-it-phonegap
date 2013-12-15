@@ -39,7 +39,7 @@ function ContenuPrincipal() {
     
     self.premierChargement = true;
     
-    updateHeightInner();
+    //updateHeightInner();
     
     //charge affichage de la rubrique Actuelle;
     //this.chargeRubriqueActuelle();
@@ -97,17 +97,52 @@ function ContenuPrincipal() {
   
   function contenuPret(){ 
     console.log("contenuPret");
-    self.zoneContenuSelector.scrollTop(0);  
-    updateHeightInner();
+    //self.zoneContenuSelector.scrollTop(0);  
+
     if(self.premierChargement){
       self.premierChargement = false;
+      
+      // ajout de l'element iScroll pour gérer le contenu
+      setTimeout(function () { 
+        myScroll = new iScroll('wrapper',{ zoom:true, bounce:false, hScrollbar:false, hScroll:false}); 
+        updateHeightInner();
+      }, 100);
+      // à tester pour prévenir d'un click pendant le scroll
+      /*
+      myScroll = new iScroll('wrapper',
+        {
+          zoom:true,
+          hScrollbar: false,
+          onScrollStart: function () {
+              $('div#wrapper a').addClass("dragging");
+          },
+          onScrollEnd: function () {
+              $('div#wrapper a').removeClass("dragging");
+              document.querySelector('.indicator > li.active').className = '';
+              document.querySelector('.indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+          }
+        }
+      );
+      $('div#wrapper a.dragging').click(function (e) {
+          e.preventDefault();
+      });
+      */
+      
+      
+      
+      
     }else{
+      // mise à jour des dimensions + appel au iscroll refresh  
+      updateHeightInner();
       // lance fermeture menu
       self.parent.menuNav.fermeMenu();  
-    }
+    }  
   }
   
   function clickSurVignette(element){
+    // à tester pour prévenir d'un click pendant le scroll
+    //if (myScroll.moved) return;
+    
     var vignette = $(element);
     /*if(!vignette.parent().hasClass('small'))
     {
@@ -214,13 +249,17 @@ function ContenuPrincipal() {
   // à déplacer dans la partie gestion de contenu
   function updateHeightInner() {
     self.contenuSelector.height(window.innerHeight);
-    self.contenuSelector.width((window.innerWidth - 10));
-    self.contenuSelector.css('margin-left','10px');
+    //self.contenuSelector.width((window.innerWidth - 10));
+    //self.contenuSelector.css('margin-left','10px');
     
     //self.zoneContenuSelector.height(window.innerHeight);
     
     $("#wrapper").height(window.innerHeight);
 	
-    myScroll = new iScroll('wrapper', { zoom:true });
+    myScroll.refresh();
+    // remonte le scroll en 0, 0 en 0 ms
+    myScroll.scrollTo(0, 0, 0);
+    
+    
   }
 }

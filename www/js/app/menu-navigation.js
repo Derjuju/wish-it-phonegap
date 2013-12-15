@@ -146,7 +146,7 @@ function MenuNavigation() {
     $(".mainContent").height(window.innerHeight);
     
     $("#wrapperMenu").height(window.innerHeight);	
-    myScrollMenu = new iScroll('wrapperMenu', { zoom:true });
+    myScrollMenu = new iScroll('wrapperMenu', { zoom:true, vScrollbar:false, hScrollbar:false, hScroll:false });
     
   }
   
