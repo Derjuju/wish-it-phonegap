@@ -249,8 +249,8 @@ function ContenuPrincipal() {
   // à déplacer dans la partie gestion de contenu
   function updateHeightInner() {
     self.contenuSelector.height(window.innerHeight);
-    //self.contenuSelector.width((window.innerWidth - 10));
-    //self.contenuSelector.css('margin-left','10px');
+    self.contenuSelector.width((window.innerWidth - 10));
+    self.contenuSelector.css('margin-left','10px');
     
     //self.zoneContenuSelector.height(window.innerHeight);
     

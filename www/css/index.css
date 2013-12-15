@@ -243,15 +243,15 @@ body.menuOuvert .contents {
 .mainContent{
   position:relative;
   z-index:1;
-  width:97%;
-  margin-left:3%;
+  /*width:97%;
+  margin-left:3%;*/
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-}
+/*}
 
 body.menuOuvert .mainContent {
-  margin-left:0%;
+  margin-left:0%;*/
   width: 100%;
 }
 
