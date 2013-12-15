@@ -69,7 +69,7 @@ function ContenuPrincipal() {
   function contenuRempli(){ 
     var rubriqueCherchee = ""+rubriqueActuelle;
     var zoneCible = self.zoneContenuSelector.find('.visuels');
-    zoneCible.addClass('small');
+    //zoneCible.addClass('small');
     var html = "";
     var position = 0;
     for(var i = 0; i<donneesJson.length; i++)
@@ -109,14 +109,15 @@ function ContenuPrincipal() {
   
   function clickSurVignette(element){
     var vignette = $(element);
-    if(!vignette.parent().hasClass('small'))
+    /*if(!vignette.parent().hasClass('small'))
     {
       modePersonnalisation(element);
     }else{
       // click sur petite on agrandit
       vignette.parent().removeClass('small');
       deplaceScrollbar(element);
-    }    
+    } */   
+    modePersonnalisation(element);
   }
   
   function deplaceScrollbar(element)

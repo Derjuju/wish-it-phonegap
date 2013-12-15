@@ -175,10 +175,12 @@ function MenuNavigation() {
   function synchroniseOuverture(){
     //console.log("synchroniseOuverture");
     swipeBindtoMeny();
+    $('body').addClass("menuOuvert");
   }
 
   function synchroniseFermeture(){
     swipeBindtoContent();
+    $('body').removeClass("menuOuvert");
   }
   
   function swipeBindtoContent(){

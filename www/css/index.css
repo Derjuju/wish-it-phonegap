@@ -232,6 +232,11 @@ body {
           box-sizing: border-box;
 }
 
+body.menuOuvert .contents {
+  background: #FF0000;
+  width:85%;
+}
+
 .mainContent{
   position:relative;
   z-index:3;
