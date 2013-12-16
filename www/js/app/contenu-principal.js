@@ -52,22 +52,35 @@ function ContenuPrincipal() {
       var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
 
       var templateAAfficher = "";
+      var typeContenu = "";
 
       if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
         templateAAfficher = itemMenu.attr('data-tpl')+'.html';
+        typeContenu = itemMenu.attr('data-tpl');
       }else{
         templateAAfficher = 'liste.html';
+        typeContenu = "liste";
       }
 
       self.zoneContenuSelector.load('js/tpl/'+templateAAfficher, function(){
         //navigator.notification.loadingStop();
-        contenuRempli();
+        contenuRempli(typeContenu);
       });
     
   };
   
-  function contenuRempli(){ 
+  function contenuRempli(typeContenu){ 
     var rubriqueCherchee = ""+rubriqueActuelle;
+    var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
+    
+    var zoneTitre = "";
+    if(typeContenu == "liste")
+    {
+      zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
+      zoneTitre.find('h1').html(itemMenu.attr('data-title'));
+    }
+    
+    
     var zoneCible = self.zoneContenuSelector.find('.visuels');
     //zoneCible.addClass('small');
     var html = "";

@@ -88,7 +88,7 @@ function MenuNavigation() {
       attributes += ' vignette';
       
       html += '<li class="' + attributes + '">';
-      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesLabel[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
+      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesLabel[i]+'" data-title="'+entriesTitle[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
       else { html +='<a href="'+entriesLink[i]+'">'+entriesLabel[i]+'</a>'; } 
       html +='</li>';
       

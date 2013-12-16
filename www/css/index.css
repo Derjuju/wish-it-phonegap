@@ -237,7 +237,7 @@ body {
 }
 
 body.menuOuvert .contents {
-  width:85%;
+  /*width:85%;*/ /* trop lent sur iPhone 4 */
 }
 
 .mainContent{
@@ -276,6 +276,18 @@ body.menuOuvert .mainContent {
 .mainContent .messageWelcome p{
   font-size: 20px;
   text-transform: none;
+}
+
+.mainContent .infoRubrique{
+  width:90%;
+  margin:0 auto;
+}
+.mainContent .infoRubrique h1{
+  font-weight: normal;
+  text-transform: none;
+  font-size: 33px;
+  margin-top: 0px;
+  padding-top: 22px;
 }
 
 .mainContent .visuels{
