@@ -209,7 +209,7 @@ function Connexion() {
       entries.push(objJSon["menu"][i]["icon"]);
       entriesLabel.push(objJSon["menu"][i]["label"]);
       entriesLink.push('#'+objJSon["menu"][i]["id"]);
-      entriesTitle.push('#'+objJSon["menu"][i]["title"]);
+      entriesTitle.push(objJSon["menu"][i]["title"]);
     }
     
     // libère mémoire
