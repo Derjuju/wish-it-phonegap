@@ -50,17 +50,23 @@ function ContenuPrincipal() {
     //navigator.notification.loadingStart();
       //href data-tpl data-id
       var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
+      
+      var itemIndice = itemMenu.attr('data-indice');
 
       var templateAAfficher = "";
       var typeContenu = "";
 
-      if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
+      /*if((itemMenu.attr('data-tpl') == 'new')||(itemMenu.attr('data-tpl') == 'mes-infos')){
         templateAAfficher = itemMenu.attr('data-tpl')+'.html';
         typeContenu = itemMenu.attr('data-tpl');
       }else{
         templateAAfficher = 'liste.html';
         typeContenu = "liste";
-      }
+      }*/
+    
+      templateAAfficher = entriesTpl[itemIndice]+'.html';
+      typeContenu = entriesTpl[itemIndice];
+      
 
       self.zoneContenuSelector.load('js/tpl/'+templateAAfficher, function(){
         //navigator.notification.loadingStop();
@@ -72,14 +78,17 @@ function ContenuPrincipal() {
   function contenuRempli(typeContenu){ 
     var rubriqueCherchee = ""+rubriqueActuelle;
     var itemMenu = self.parent.menuNav.getItemMenu(rubriqueActuelle);
+    var itemIndice = itemMenu.attr('data-indice');
+    
     
     var zoneTitre = "";
-    if(typeContenu == "liste")
+    if((typeContenu == "new")||(typeContenu == "liste"))
     {
       zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
-      zoneTitre.find('h1').html(itemMenu.attr('data-title'));
+      zoneTitre.find('h1').html(entriesTitle[itemIndice]);
     }
-    if(typeContenu == "mes-infos")
+    
+    /*if(typeContenu == "mes-infos")
     {
       self.zoneContenuSelector.find('.envoyer a').bind('click', function(event){
         event.preventDefault();
@@ -90,7 +99,7 @@ function ContenuPrincipal() {
           ouvreChoixPartage(element,idElement);
         }
       });
-    }
+    }*/
     
     
     var zoneCible = self.zoneContenuSelector.find('.visuels');
@@ -110,6 +119,13 @@ function ContenuPrincipal() {
     zoneCible.html(html);
     
     zoneCible.find('img').bind('click', function(){ clickSurVignette(this); });
+    
+    var zoneRetourMenu = self.zoneContenuSelector.find('#retourMenu a');
+    zoneRetourMenu.bind('click', function(event){ 
+      event.preventDefault();
+      self.parent.menuNav.ouvreMenu();
+    });
+    
     
     contenuPret();
   }
@@ -132,6 +148,11 @@ function ContenuPrincipal() {
         myScroll = new iScroll('wrapper',{ zoom:true, bounce:false, hScrollbar:false, hScroll:false}); 
         updateHeightInner();
       }, 100);
+      
+      setTimeout(function () { 
+        // lance fermeture menu
+        self.parent.menuNav.fermeMenu();
+      }, 2000);  
       
     }else{
       // mise à jour des dimensions + appel au iscroll refresh  
@@ -183,7 +204,7 @@ function ContenuPrincipal() {
             
       var titre = elementVignette["texte"].split('<br>')[0];
       var reg=new RegExp("(<br>)", "g")
-      self.messagePerso = elementVignette["texte"].replace(reg, ' ');
+      self.messagePerso = "";//elementVignette["texte"].replace(reg, ' ');
       
       var imagePreview = cdn_visuel+'images/preview/'+elementVignette["preview"];
       var imageVierge = cdn_visuel+'images/image/'+elementVignette["preview"];
@@ -245,7 +266,7 @@ function ContenuPrincipal() {
             
             var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
             //share('message', 'sujet', 'image', 'site web');
-            window.plugins.socialsharing.share(self.messagePerso, 'Meilleurs voeux 2014', imageToShare, website_app);
+            window.plugins.socialsharing.share(self.messagePerso, 'Bonne année et...', imageToShare, website_app);
           }else{
             console.log("plugin social sharing : non dispo");
           }

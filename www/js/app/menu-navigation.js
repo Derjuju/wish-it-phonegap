@@ -88,7 +88,8 @@ function MenuNavigation() {
       attributes += ' vignette';
       
       html += '<li class="' + attributes + '">';
-      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesLabel[i]+'" data-title="'+entriesTitle[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
+      //if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-tpl="'+entriesTpl[i]+'" data-title="'+entriesTitle[i]+'" data-id="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
+      if(entries[i] != "") { html +='<a href="'+entriesLink[i]+'" data-indice="'+i+'">'+insereBigVignette(entries[i], entriesLabel[i])+'</a>'; }
       else { html +='<a href="'+entriesLink[i]+'">'+entriesLabel[i]+'</a>'; } 
       html +='</li>';
       
@@ -169,7 +170,8 @@ function MenuNavigation() {
   * @param {String} type source de l'image
   */
   function insereBigVignette( srcImage, lblImage ) {
-    return '<img src="img/menu/'+ srcImage +'"><div class="labelImage">'+lblImage+'</div>';
+    //return '<img src="img/menu/'+ srcImage +'"><div class="labelImage">'+lblImage+'</div>';
+    return '<img src="'+cdn_visuel+'images/icon/'+ srcImage +'"><div class="labelImage">'+lblImage+'</div>';
   }
   
   function synchroniseOuverture(){

@@ -28,7 +28,7 @@ var APP_PROD = true;
 // GLOBAL
 //---------------------------------
 var myApp;
-var entries, entriesLink, entriesLabel, entriesTitle;
+var entries, entriesLink, entriesLabel, entriesTitle, entriesTpl;
 var donneesJson;
 
 var rubriqueActuelle = 0;

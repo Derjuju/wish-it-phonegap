@@ -262,6 +262,13 @@ body.menuOuvert .mainContent {
   z-index: 1;
 }
 
+#retourMenu a img {
+  height: 30px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+
 .mainContent .messageWelcome{
   width:90%;
   margin:0 auto;
@@ -271,15 +278,49 @@ body.menuOuvert .mainContent {
   text-transform: none;
   font-size: 33px;
   margin-top: 0px;
-  padding-top: 22px;
+  padding-top: 20px;
 }
 .mainContent .messageWelcome p{
-  font-size: 20px;
+  font-size: 18px;
   text-transform: none;
 }
+.mainContent .messageWelcome h2{
+  font-weight: normal;
+  font-size: 20px;
+}
+
 .mainContent .messageWelcome span.rayerTexte{
   text-decoration: line-through;
 }
+
+
+.mainContent .messageApropos{
+  width:90%;
+  margin:0 auto;
+}
+.mainContent .messageApropos h1{
+  font-weight: normal;
+  text-transform: none;
+  font-size: 33px;
+  margin-top: 0px;
+  padding-top: 20px;
+}
+.mainContent .messageApropos p{
+  font-size: 14px;
+  text-transform: none;
+  margin-top: 0px;
+}
+.mainContent .messageApropos h2{
+  font-weight: normal;
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.mainContent .messageApropos span.rayerTexte{
+  text-decoration: line-through;
+}
+
+
 .mainContent .infoRubrique{
   width:90%;
   margin:0 auto;

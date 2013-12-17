@@ -192,24 +192,20 @@ function Connexion() {
   
   function analyseDonnees(objJSon) {
   
-    //var stringJSon = '{"menu":[{"id":0,"label":"new","icon":"icon-new.jpg"},{"id":1,"label":"famille","icon":"icon-famille.jpg"},{"id":2,"label":"fun","icon":"icon-fun.jpg"},{"id":3,"label":"pro","icon":"icon-pro.jpg"},{"id":4,"label":"autre","icon":"icon-autre.jpg"},{"id":-1,"label":"mes-infos","icon":"icon-mes-infos.jpg"}],"contenu":[{"id":1,"cat":"0,1","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":2,"cat":"0,1","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":3,"cat":"0,2","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":4,"cat":"0,2","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":5,"cat":"0,2","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":6,"cat":"0,3","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":7,"cat":"0,3","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":8,"cat":"0,3","preview":"requin.jpg","image":"requin.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"},{"id":9,"cat":"0,3","preview":"pipe.jpg","image":"pipe.jpg","texte":"mets toi plus<br>\u00e0 la pipe"},{"id":10,"cat":"4","preview":"requin.jpg","image":"requin2.jpg","texte":"sois moins<br>comme<br>ta m\u00e8re"}]}';
-    
-    //var objMenu = JSON.parse(stringJSon);
-    
-    //donneesJson = objMenu["contenu"];
-    
     donneesJson = objJSon["contenu"];
     
     entries = new Array();
     entriesLabel = new Array();
     entriesLink = new Array();
     entriesTitle = new Array();
+    entriesTpl = new Array();
     for(var i = 0; i<objJSon["menu"].length; i++)
     {
       entries.push(objJSon["menu"][i]["icon"]);
       entriesLabel.push(objJSon["menu"][i]["label"]);
       entriesLink.push('#'+objJSon["menu"][i]["id"]);
       entriesTitle.push(objJSon["menu"][i]["title"]);
+      entriesTpl.push(objJSon["menu"][i]["tpl"]);
     }
     
     // libère mémoire
