@@ -79,6 +79,18 @@ function ContenuPrincipal() {
       zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
       zoneTitre.find('h1').html(itemMenu.attr('data-title'));
     }
+    if(typeContenu == "mes-infos")
+    {
+      self.zoneContenuSelector.find('.envoyer a').bind('click', function(event){
+        event.preventDefault();
+        if($(this).hasClass('sms'))
+        {
+          envoiChoixParSMS();
+        }else{
+          ouvreChoixPartage(element,idElement);
+        }
+      });
+    }
     
     
     var zoneCible = self.zoneContenuSelector.find('.visuels');
@@ -120,29 +132,6 @@ function ContenuPrincipal() {
         myScroll = new iScroll('wrapper',{ zoom:true, bounce:false, hScrollbar:false, hScroll:false}); 
         updateHeightInner();
       }, 100);
-      // à tester pour prévenir d'un click pendant le scroll
-      /*
-      myScroll = new iScroll('wrapper',
-        {
-          zoom:true,
-          hScrollbar: false,
-          onScrollStart: function () {
-              $('div#wrapper a').addClass("dragging");
-          },
-          onScrollEnd: function () {
-              $('div#wrapper a').removeClass("dragging");
-              document.querySelector('.indicator > li.active').className = '';
-              document.querySelector('.indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
-          }
-        }
-      );
-      $('div#wrapper a.dragging').click(function (e) {
-          e.preventDefault();
-      });
-      */
-      
-      
-      
       
     }else{
       // mise à jour des dimensions + appel au iscroll refresh  
@@ -210,7 +199,12 @@ function ContenuPrincipal() {
       });
       self.detailSelector.find('.envoyer a').bind('click', function(event){
         event.preventDefault();
-        ouvreChoixPartage(element,idElement);
+        if($(this).hasClass('sms'))
+        {
+          envoiChoixParSMS(element,idElement);
+        }else{
+          ouvreChoixPartage(element,idElement);
+        }
       });
       
       self.detailSelector.addClass('affiche');
@@ -257,6 +251,16 @@ function ContenuPrincipal() {
           }
         });
     
+  }
+  
+  function envoiChoixParSMS(){ //element,idElement){
+    //var vignette = $(element);
+    //var elementVignette = donneesJson[idElement];
+    
+    //var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+    var imageToShare = cdn_visuel+'images/preview/requin.jpg';
+    //self.messagePerso, 'Meilleurs voeux 2014', imageToShare, website_app);
+    window.location.href = "sms:contactno?body=Meilleurs voeux 2014";
   }
   
   // à déplacer dans la partie gestion de contenu

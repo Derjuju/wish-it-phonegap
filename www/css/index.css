@@ -277,7 +277,9 @@ body.menuOuvert .mainContent {
   font-size: 20px;
   text-transform: none;
 }
-
+.mainContent .messageWelcome span.rayerTexte{
+  text-decoration: line-through;
+}
 .mainContent .infoRubrique{
   width:90%;
   margin:0 auto;
