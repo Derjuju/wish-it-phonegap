@@ -27,13 +27,16 @@ function MenuNavigation() {
   var largeurDevice;
   var parent = null;
   
+  var pullDownEl, pullDownOffset;
+  
   // constructeur
   this.initialise = function() {
     // largeur = 36% window or max = 228px
-  	largeurDevice = Math.ceil(window.innerWidth*0.36);
-  	if(largeurDevice > 228) largeurDevice = 228;
+    largeurDevice = Math.ceil(window.innerWidth*0.36);
+    if(largeurDevice > 228) largeurDevice = 228;
   	
-  	
+    self.pullDownEl = document.getElementById('pullDown');
+    self.pullDownOffset = self.pullDownEl.offsetHeight;
     
     self.menu = Meny.create({
       // The element that will be animated in from off screen
@@ -76,7 +79,7 @@ function MenuNavigation() {
   // construction automatique
   self.initialise();
     
-  this.fabricationListeMenu = function(_parent) {
+  this.fabricationListeMenu = function(_parent, demarrageApplication) {
     self.parent = _parent;
     
     self.menuElements = $('.menu-list');
@@ -109,18 +112,15 @@ function MenuNavigation() {
     // Set the default effect
     self.menuElements.addClass('wave');
     
-    this.updateHeight();
+    this.updateHeight(demarrageApplication);
     
     // ajoute un click sur les éléments
     self.menuElements.find(".vignette a").each(function(){
       $(this).click(function(event){
-        event.preventDefault();
-        //if( $("html").attr("id") != "ie6" && $("html").attr("id") != "ie7" && $("html").attr("id") != "ie8" ){
+        event.preventDefault();        
           requeteAjaxMenuNav(this);
-	//}
       });
     });
-    //var t=setTimeout(this.ouvreMenu,1000);
     
     // annonce que le menu est prêt
     $("#eventManager").trigger('menuNavigationReady');
@@ -139,16 +139,64 @@ function MenuNavigation() {
   * Updates the list height to match the window height for 
   * the demo. Also re-binds the list with stroll.js.
   */
-  this.updateHeight = function() {
+  this.updateHeight = function(demarrageApplication) {
     //self.menuElements.css('height',window.innerHeight + 'px');
     //stroll.bind($(self.menuElements));
     
     //$(".fondListe").height(window.innerHeight);
     $(".mainContent").height(window.innerHeight);
     
-    $("#wrapperMenu").height(window.innerHeight);	
-    myScrollMenu = new iScroll('wrapperMenu', { zoom:true, vScrollbar:false, hScrollbar:false, hScroll:false });
+    $("#wrapperMenu").height(window.innerHeight);
     
+    if(!demarrageApplication){
+      myScrollMenu.refresh();
+    }else{    
+      myScrollMenu = new iScroll('wrapperMenu', { 
+        //zoom:true, 
+        vScrollbar:false, hScrollbar:false, hScroll:false,
+        //useTransition: true,
+        topOffset: self.pullDownOffset,
+        onRefresh: function () {
+			if (self.pullDownEl.className.match('loading')) {
+				self.pullDownEl.className = '';
+                                $(".fondListe").removeClass("loading");
+				self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'actualiser';
+			}
+		},
+        onScrollMove: function () {
+			if (this.y > 35 && !self.pullDownEl.className.match('flip')) {
+				self.pullDownEl.className = 'flip';
+				self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'actualiser';
+				this.minScrollY = 0;                                  
+			} else if (this.y < 35 && self.pullDownEl.className.match('flip')) {
+				self.pullDownEl.className = '';
+				self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'actualiser';
+				this.minScrollY = -self.pullDownOffset; 
+			}
+		},
+        onBeforeScrollEnd: function () {
+			if (self.pullDownEl.className.match('flip')) {
+				$(".fondListe").addClass("loading")				
+			}
+		},
+        onScrollEnd: function () {
+			if (self.pullDownEl.className.match('flip')) {
+				self.pullDownEl.className = 'loading'; 
+				self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'chargement';				
+				pullDownAction();	// Execute custom function (ajax call?)
+			}
+		}
+      });
+    }
+    
+  }
+  
+  function pullDownAction(){
+    // test si du nouveau contenu existe
+    setTimeout(function () {
+        self.parent.verifieDonneesServeur();
+        //myScrollMenu.refresh();
+    },1000);
   }
   
   

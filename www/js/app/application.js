@@ -100,6 +100,8 @@ function MyApplication(){
   var contenuPrincipal;
   var connexion;
   
+  var demarrageApplication = false;
+  
   // constructeur
   this.initialise = function() {
     //navigator.splashscreen.show();
@@ -109,6 +111,11 @@ function MyApplication(){
     //$("#app").css('width',window.innerWidth+"px");
     //$("#app").css('height',window.innerHeight+"px");
     
+    self.demarrageApplication = true;
+    self.verifieDonneesServeur();
+  };
+  
+  this.verifieDonneesServeur = function(){
     $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );
     
     if(!connexion.verifieVersion())
@@ -120,7 +127,7 @@ function MyApplication(){
       $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
       connexion.initialiseDonnees();
     }
-  };
+  }
   
   function onVersionVerifiee() {
     $("#eventManager").off('versionVerifiee');
@@ -153,34 +160,43 @@ function MyApplication(){
     initialiseUI(); 
   }
   
+  
   function initialiseUI() {
     $("#eventManager").on('menuNavigationReady', function() { onMenuNavigationReady(); } );
-    self.menuNav = new MenuNavigation();
-    self.menuNav.fabricationListeMenu(self);
+    if(self.demarrageApplication)
+    {
+      self.menuNav = new MenuNavigation();
+    }
+    self.menuNav.fabricationListeMenu(self, self.demarrageApplication);    
   }  
   
   function onMenuNavigationReady(){
     $("#eventManager").off('menuNavigationReady');
-    navigator.splashscreen.hide();
+    if(self.demarrageApplication)
+    {
+      self.demarrageApplication = false;
+      navigator.splashscreen.hide();
     
     
-    // masque la barre de status sous iOS7
-        if(IS_IOS){
-          if(APP_PROD)
-          {
-            if (StatusBar.isVisible) {
-              StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
-              StatusBar.hide();          
-            }
+      // masque la barre de status sous iOS7
+      if(IS_IOS){
+        if(APP_PROD)
+        {
+          if (StatusBar.isVisible) {
+            StatusBar.overlaysWebView(false); // status bar redevient comme sous iOS6
+            StatusBar.hide();          
           }
         }
-    
-    
-    self.menuNav.ouvreMenu();
+      }
 
-    self.contenuPrincipal = new ContenuPrincipal();
-    self.contenuPrincipal.initialise(self); 
-    //self.miseAjourContenu(); 
+
+      self.menuNav.ouvreMenu();
+
+      self.contenuPrincipal = new ContenuPrincipal();
+      self.contenuPrincipal.initialise(self); 
+      //self.miseAjourContenu(); 
+    }
+    rubriqueActuelle = 0;
     self.menuNav.simuleClickNavigation(rubriqueActuelle);
   }
   

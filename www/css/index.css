@@ -84,6 +84,8 @@ body {
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
+                
+  background-color: #FFF;
 }
 .meny {
 	display: block; 
@@ -111,6 +113,13 @@ body {
 	z-index:5;
         overflow-x: hidden;
 	overflow-y: auto;
+        /*margin-top: -51px;*/
+        top: -51px;
+        -webkit-transition: top 500ms linear;
+}
+.meny .fondListe.loading{
+	/*margin-top: 0px;        */
+        top: 0px;
 }
 .meny ul {
 	position: relative;
@@ -329,8 +338,14 @@ body.menuOuvert .mainContent {
   font-weight: normal;
   text-transform: none;
   font-size: 33px;
-  margin-top: 0px;
-  padding-top: 22px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.mainContent .infoRubrique h1 span{
+  font-size: 20px;
+  padding-left: 2px;
+  display: block;
 }
 
 .mainContent .visuels{
@@ -458,4 +473,69 @@ body.menuOuvert .mainContent {
   height:34px;
   margin:0 auto;
   margin-top: 20px;
+}
+
+
+
+
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+	background:#fff;
+	height:40px;
+	line-height:34px;
+	padding:5px 0px;
+	border-bottom:1px solid #ccc;
+	/*font-weight:bold;*/
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px;
+        height:40px;
+        background: #fff url("../img/ui/pull-icon@2x.png") 0 0 no-repeat;
+       
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0); 
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown .pullDownLabel {
+  padding-left: 7px;
+  font-size:12px;
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+        background-color: #fff
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
