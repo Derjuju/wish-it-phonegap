@@ -184,7 +184,13 @@ function MenuNavigation() {
 				self.pullDownEl.className = 'loading'; 
 				self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'chargement';				
 				pullDownAction();	// Execute custom function (ajax call?)
-			}
+			}else{
+                          if((this.y+$(".fondListe").height()-$("#pullDown").height()) < window.innerHeight)
+                          {                            
+                            var recaleScrollMenu = window.innerHeight - $(".fondListe").height() + $("#pullDown").outerHeight();
+                            myScrollMenu.scrollTo(0,recaleScrollMenu,50);
+                          }
+                        }
 		}
       });
     }
