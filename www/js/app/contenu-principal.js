@@ -85,7 +85,7 @@ function ContenuPrincipal() {
     if((typeContenu == "new")||(typeContenu == "liste"))
     {
       zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
-      zoneTitre.find('h1').html(entriesTitle[itemIndice]);
+      zoneTitre.find('h1').html(' ');//entriesTitle[itemIndice]);
     }
     
     /*if(typeContenu == "mes-infos")
@@ -222,6 +222,8 @@ function ContenuPrincipal() {
       // récuperation de la fiche de l'élément
       var idElement = vignette.attr('data-id');
       var elementVignette = donneesJson[idElement];
+      
+      var idShare = elementVignette["id"];
             
       var titre = elementVignette["texte"].split('<br>')[0];
       var reg=new RegExp("(<br>)", "g")
@@ -255,6 +257,14 @@ function ContenuPrincipal() {
         {
           ouvreChoixPartage(element,idElement);
         }
+        
+        $.ajax({
+                  type: 'POST',
+                  url: webservice_stats,
+                  data: {id:idShare},
+                  async:true
+                })
+        
       });
       
       self.detailSelector.addClass('affiche');
