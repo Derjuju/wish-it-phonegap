@@ -133,12 +133,33 @@ function ContenuPrincipal() {
   function insereVignette(elementVignette,indice,position){
     var html = "";    
     html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';    
+    //html+='<img data-id="'+indice+'" data-position="'+position+'" src="img/vide.png">';    
     return html;
+  }
+  
+  function lanceSubstitution(){
+    /*for(var i = 0; i<donneesJson.length; i++)
+    {
+      var cat = donneesJson[i]['cat'];
+      if($.inArray(rubriqueCherchee, cat) > -1)
+      {
+        html += remplaceVignette(donneesJson[i],i,position);
+        position++;
+      }
+    }*/
+    
+    var zoneCible = self.zoneContenuSelector.find('.visuels');
+    zoneCible.find('img').each(function(){      
+      $(this).attr('src', cdn_visuel+'images/preview/'+donneesJson[$(this).attr('data-id')]["preview"]) ;
+    });
+    
   }
   
   function contenuPret(){ 
     console.log("contenuPret");
     //self.zoneContenuSelector.scrollTop(0);  
+    
+    //lanceSubstitution();
 
     if(self.premierChargement){
       self.premierChargement = false;
@@ -218,13 +239,21 @@ function ContenuPrincipal() {
         event.preventDefault();
         fermerDetail(element);
       });
+      
       self.detailSelector.find('.envoyer a').bind('click', function(event){
         event.preventDefault();
-        if($(this).hasClass('sms'))
+        if($(this).hasClass('share-sms'))
         {
-          envoiChoixParSMS(element,idElement);
-        }else{
           ouvreChoixPartage(element,idElement);
+        }else if($(this).hasClass('share-mail'))
+        {
+          envoiChoixParMail(element,idElement);
+        }else if($(this).hasClass('share-fb'))
+        {
+          //ouvreChoixPartage(element,idElement);
+        }else if($(this).hasClass('share-tw'))
+        {
+          //ouvreChoixPartage(element,idElement);
         }
       });
       
@@ -279,9 +308,35 @@ function ContenuPrincipal() {
     //var elementVignette = donneesJson[idElement];
     
     //var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
-    var imageToShare = cdn_visuel+'images/preview/requin.jpg';
+    //var imageToShare = cdn_visuel+'images/preview/requin.jpg';
     //self.messagePerso, 'Meilleurs voeux 2014', imageToShare, website_app);
-    window.location.href = "sms:contactno?body=Meilleurs voeux 2014";
+    //window.location.href = "sms:contactno?body=Meilleurs voeux 2014";
+  }
+  
+  
+  function envoiChoixParMail(element,idElement){
+    var vignette = $(element);
+    var elementVignette = donneesJson[idElement];
+    
+    var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+    
+    var mailShare = plugin.email;
+    mailShare.isServiceAvailable(function(isAvailable) {
+      if (isAvailable) {
+        mailShare.open({
+            to:      [],
+            cc:      [],
+            bcc:     [],
+            subject: 'Bonne année et...',
+            body:    '<br><img src="'+imageToShare+'"><br>Offrez, vous aussi, une bonne (ou mauvaise) r&eacute;solution : <a href="http://wishit.freetouch.fr">wishit.freetouch.fr</a>',
+            isHtml:  true
+        }, function(code){
+          alert(code);
+        });
+      }
+    });
+    
+    
   }
   
   // à déplacer dans la partie gestion de contenu
