@@ -250,10 +250,10 @@ function ContenuPrincipal() {
           envoiChoixParMail(element,idElement);
         }else if($(this).hasClass('share-fb'))
         {
-          //ouvreChoixPartage(element,idElement);
+          ouvreChoixPartage(element,idElement);
         }else if($(this).hasClass('share-tw'))
         {
-          //ouvreChoixPartage(element,idElement);
+          ouvreChoixPartage(element,idElement);
         }
       });
       
@@ -287,17 +287,16 @@ function ContenuPrincipal() {
     var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
         
         //window.plugins.socialsharing.share(null, null, imageToShare);
-        console.log("appel du plugin social sharing");
         var socialShare = window.plugins.socialsharing;
         socialShare.available(function(isAvailable) {
           if (isAvailable) {
-            console.log("plugin social sharing : dispo");
             
             var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+            
+            self.messagePerso = "Offrez, vous aussi, une bonne (ou mauvaise) résolution";
+            
             //share('message', 'sujet', 'image', 'site web');
             window.plugins.socialsharing.share(self.messagePerso, 'Bonne année et...', imageToShare, website_app);
-          }else{
-            console.log("plugin social sharing : non dispo");
           }
         });
     
@@ -330,8 +329,6 @@ function ContenuPrincipal() {
             subject: 'Bonne année et...',
             body:    '<br><img src="'+imageToShare+'"><br>Offrez, vous aussi, une bonne (ou mauvaise) r&eacute;solution : <a href="http://wishit.freetouch.fr">wishit.freetouch.fr</a>',
             isHtml:  true
-        }, function(code){
-          alert(code);
         });
       }
     });
