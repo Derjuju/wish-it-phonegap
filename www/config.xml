@@ -54,6 +54,7 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     <gap:plugin name="nl.x-services.plugins.socialsharing" />
     <gap:plugin name="com.phonegap.plugin.statusbar" /><!-- iOS7 plugin -->
+    <gap:plugin name="de.appplant.cordova.plugin.email-composer" />
     
     <icon src="icon.png" />
     
