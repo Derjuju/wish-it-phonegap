@@ -30,6 +30,10 @@ function ContenuPrincipal() {
   
   var messagePerso;
   
+  var largeurEcran;
+  var largeurVignette;
+  var hauteurVignette;
+  
   // constructeur
   this.initialise = function(_parent) {
     self.parent = _parent;
@@ -38,6 +42,10 @@ function ContenuPrincipal() {
     self.detailSelector = $('#detailManager');
     
     self.premierChargement = true;
+    
+    self.largeurEcran = Math.floor(window.innerWidth * 0.9);
+    self.largeurVignette = Math.floor(self.largeurEcran * 0.5);
+    self.hauteurVignette = Math.floor(400 * self.largeurVignette / 300);
     
     //updateHeightInner();
     
@@ -85,7 +93,7 @@ function ContenuPrincipal() {
     if((typeContenu == "new")||(typeContenu == "liste"))
     {
       zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
-      zoneTitre.find('h1').html(' ');//entriesTitle[itemIndice]);
+      zoneTitre.find('h1').html(entriesTitle[itemIndice]);
     }
     
     /*if(typeContenu == "mes-infos")
@@ -132,21 +140,12 @@ function ContenuPrincipal() {
   
   function insereVignette(elementVignette,indice,position){
     var html = "";    
-    html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';    
-    //html+='<img data-id="'+indice+'" data-position="'+position+'" src="img/vide.png">';    
+    //html+='<img data-id="'+indice+'" data-position="'+position+'" src="'+cdn_visuel+'images/preview/'+elementVignette["preview"]+'">';    
+    html+='<img data-id="'+indice+'" data-position="'+position+'" src="img/vignette-vide.png" height="'+self.hauteurVignette+'" width="'+self.largeurVignette+'">';    
     return html;
   }
   
   function lanceSubstitution(){
-    /*for(var i = 0; i<donneesJson.length; i++)
-    {
-      var cat = donneesJson[i]['cat'];
-      if($.inArray(rubriqueCherchee, cat) > -1)
-      {
-        html += remplaceVignette(donneesJson[i],i,position);
-        position++;
-      }
-    }*/
     
     var zoneCible = self.zoneContenuSelector.find('.visuels');
     zoneCible.find('img').each(function(){      
@@ -159,8 +158,6 @@ function ContenuPrincipal() {
     console.log("contenuPret");
     //self.zoneContenuSelector.scrollTop(0);  
     
-    //lanceSubstitution();
-
     if(self.premierChargement){
       self.premierChargement = false;
       
@@ -181,6 +178,9 @@ function ContenuPrincipal() {
       // lance fermeture menu
       self.parent.menuNav.fermeMenu();  
     }  
+    
+    lanceSubstitution();
+    
   }
   
   function clickSurVignette(element){
@@ -233,7 +233,8 @@ function ContenuPrincipal() {
       var imageVierge = cdn_visuel+'images/image/'+elementVignette["preview"];
       
       // customisation de la fiche detail
-      self.detailSelector.find('.titre').html('<h1>'+titre+'...</h1>');
+      //self.detailSelector.find('.titre').html('<h1>'+titre+'...</h1>');
+      self.detailSelector.find('.titre').html('<h1></h1>');
       self.detailSelector.find('.visuel').html('<img src="'+imagePreview+'" >');
       
       // liaison des boutons
