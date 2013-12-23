@@ -23,6 +23,7 @@ function Connexion() {
   var self = this;
   
   self.etatApplication = null;
+  var lastDataVersion;
   
   this.verifieVersion = function(){
     var etatApplication = false;
@@ -65,17 +66,19 @@ function Connexion() {
   
   function compareVersionAppEtData(appVersion,dataVersion){
     // test si différence de version de l'application
-    if(appVersion != getAppVersion())
+    if(appVersion != self.getAppVersion())
     {
       self.etatApplication = -1; // il faut mettre à jour l'application
     }else{
       // test si différence de version des données
-      if(dataVersion != getDataVersion())
+      if(dataVersion != self.getDataVersion())
       {
         self.etatApplication = 0; // il faut mettre à jour les données
+        self.lastDataVersion = dataVersion;
       }else{
         // OK, application et données à jour
         self.etatApplication = 1;
+        self.lastDataVersion = dataVersion;
       }
     } 
     
@@ -99,13 +102,13 @@ function Connexion() {
   
   
   function gotFSforCheckUpdate(fileSystem) {
-    console.log(fileSystem.name);
-    console.log(fileSystem.root);   
+    //console.log(fileSystem.name);
+    //console.log(fileSystem.root);   
     fileSystem.root.getFile("check-update.json", {create: true, exclusive: false}, gotFileEntryforCheckUpdate, failFile);    
   }
   function gotFileEntryforCheckUpdate(fileEntry) {
-    console.log(fileEntry);
-    console.log(fileEntry.name);
+    //console.log(fileEntry);
+    //console.log(fileEntry.name);
     fileEntry.file(gotFileforCheckUpdate, fail);
   }
   function gotFileforCheckUpdate(file){
@@ -115,38 +118,26 @@ function Connexion() {
   function readAsTextforCheckUpdate(file) {
     var reader = new FileReader();
     reader.onloadend = function(evt) {
-      console.log("Read as text");
-      console.log(evt.target.result);
+      //console.log("Read as text");
+      //console.log(evt.target.result);
     };
     reader.readAsText(file);
   }
   function fail(error) {
-    console.log(error);
-    console.log(error.code);
+    //console.log(error);
+    //console.log(error.code);
   }
   function failFile(error) {
-    console.log(error);
-    console.log(error.code);
-    console.log("error getting file");
+    //console.log(error);
+    //console.log(error.code);
+    //console.log("error getting file");
   }
   
-  
-  
-  this.miseAjourDonnees = function(){
-    var etatDonnees = 0;
-    if(this.testConnectivite())
-    {      
-      // controle version application
-      //if()
-    }
-    
-    return etatDonnees;
-  };
   
   // ---------------------------
   this.testConnectivite = function() {
     var networkState = navigator.connection.type;
-    console.log("testConnectivite : "+networkState);
+    //console.log("testConnectivite : "+networkState);
     var states = {};
     states[Connection.UNKNOWN]  = 'Unknown connection';
     states[Connection.ETHERNET] = 'Ethernet connection';
@@ -208,6 +199,9 @@ function Connexion() {
       entriesTpl.push(objJSon["menu"][i]["tpl"]);
     }
     
+    // annonce que nos données sont à jour à cette version
+    setDataVersion();
+    
     // libère mémoire
     objJSon = null;
     
@@ -216,16 +210,29 @@ function Connexion() {
   };
   
   
-  function getAppVersion(){
+  this.getAppVersion = function(){
     var appVersion = "1.0.0";
     
     return appVersion;
   };
   
-  function getDataVersion(){
-    var dataVersion = "20131208.150000";
+  this.getDataVersion = function(){
+    //var dataVersion = "20131208.150000";
+    var dataVersion = "";
+    
+    if(permanentStorage.getItem("data-version")!= null)
+    {
+      dataVersion = permanentStorage.getItem("data-version");
+    }
+    
     
     return dataVersion;
   };  
+  
+  function setDataVersion(){    
+    permanentStorage.setItem("data-version",self.lastDataVersion);
+    //console.log("place en stockage permanent : "+self.lastDataVersion);
+    //console.log("permanentStorage.getItem( data-version ) : "+permanentStorage.getItem("data-version"));
+  }
   
 }

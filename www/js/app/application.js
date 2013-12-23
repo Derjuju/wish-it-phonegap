@@ -31,6 +31,8 @@ var myApp;
 var entries, entriesLink, entriesLabel, entriesTitle, entriesTpl;
 var donneesJson;
 
+var permanentStorage = window.localStorage;
+
 var rubriqueActuelle = 0;
 
 var myScroll, myScrollMenu;
@@ -130,6 +132,16 @@ function MyApplication(){
     }
   }
   
+  this.reVerifieDonneesServeur = function(){
+    $("#eventManager").on('versionVerifiee', function() { onReVersionVerifiee(); } );
+    
+    if(!connexion.verifieVersion())
+    {
+      $("#eventManager").off('versionVerifiee');
+      notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');
+    }
+  }
+  
   function onVersionVerifiee() {
     $("#eventManager").off('versionVerifiee');
     // on teste la valeur de la verification
@@ -137,16 +149,48 @@ function MyApplication(){
     
     if(etatApplication >= 0)
     {
-      // charge les données du cache
-      $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
-      if(!connexion.initialiseDonnees())
+        // charge les données
+        $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
+        if(!connexion.initialiseDonnees())
+        {
+          $("#eventManager").off('initialiseDonneesReady');
+          //initialise les Données depuis le cache
+          //@todo : initialise les Données
+          // charge les données du cache
+          // quand on utilisera un système de fichier
+          // pour le moment on bloque en réclamant une connectivité
+          notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');        
+        }
+    }else{
+      notificationMessage("Vous devez mettre à jour l'application pour pouvoir l'utiliser", goToStore, 'Application périmée', 'OK');
+    }
+    
+  }
+  
+  function onReVersionVerifiee() {
+    $("#eventManager").off('versionVerifiee');
+    // on teste la valeur de la verification
+    var etatApplication = connexion.getEtatApplication();
+    
+    if(etatApplication >= 0)
+    {
+      // met à jour l'application
+      if(etatApplication == 0)
       {
-        $("#eventManager").off('initialiseDonneesReady');
-        //initialise les Données depuis le cache
-        //@todo : initialise les Données
         // charge les données du cache
-        // pour le moment on bloque en réclamant une connectivité
-        notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');        
+        $("#eventManager").on('initialiseDonneesReady', function() { onInitialiseDonneesReady(); } );
+        if(!connexion.initialiseDonnees())
+        {
+          $("#eventManager").off('initialiseDonneesReady');
+          //initialise les Données depuis le cache
+          //@todo : initialise les Données
+          // charge les données du cache
+          // pour le moment on bloque en réclamant une connectivité
+          notificationMessage('Vous devez être connecté pour pouvoir utiliser cette application.', null, 'Absence de connectivité', 'OK');        
+        }
+      }else{
+        // données inchangées, on est déjà à jour, on ne fait rien
+        self.menuNav.finMiseAJour();
       }
 
     }else{
@@ -216,6 +260,14 @@ function MyApplication(){
     //@TODO : envoyer vers le store correspondant pour mettre à jour
     console.log("envoyer vers le store correspondant pour mettre à jour");
   }
+  
+  this.getAppVersion = function(){
+    return connexion.getAppVersion();
+  };
+  
+  this.getDataVersion = function(){
+    return connexion.getDataVersion();
+  }; 
   
 }
 

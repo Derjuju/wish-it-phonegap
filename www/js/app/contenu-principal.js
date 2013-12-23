@@ -95,6 +95,11 @@ function ContenuPrincipal() {
       zoneTitre = self.zoneContenuSelector.find('.infoRubrique');
       zoneTitre.find('h1').html(entriesTitle[itemIndice]);
     }
+    else if(typeContenu == "a-propos")
+    {
+      self.zoneContenuSelector.find('.appVersion').html(self.parent.getAppVersion());
+      self.zoneContenuSelector.find('.dataVersion').html(self.parent.getDataVersion());
+    }
     
     /*if(typeContenu == "mes-infos")
     {
@@ -155,7 +160,7 @@ function ContenuPrincipal() {
   }
   
   function contenuPret(){ 
-    console.log("contenuPret");
+    //console.log("contenuPret");
     //self.zoneContenuSelector.scrollTop(0);  
     
     if(self.premierChargement){
@@ -234,7 +239,7 @@ function ContenuPrincipal() {
       
       // customisation de la fiche detail
       //self.detailSelector.find('.titre').html('<h1>'+titre+'...</h1>');
-      self.detailSelector.find('.titre').html('<h1></h1>');
+      self.detailSelector.find('.titre').html('<h1> </h1>');
       self.detailSelector.find('.visuel').html('<img src="'+imagePreview+'" >');
       
       // liaison des boutons
@@ -245,7 +250,10 @@ function ContenuPrincipal() {
       
       self.detailSelector.find('.envoyer a').bind('click', function(event){
         event.preventDefault();
-        if($(this).hasClass('share-sms'))
+        if($(this).hasClass('share'))
+        {
+          ouvreChoixPartage(element,idElement);
+        }else if($(this).hasClass('share-sms'))
         {
           ouvreChoixPartage(element,idElement);
         }else if($(this).hasClass('share-mail'))

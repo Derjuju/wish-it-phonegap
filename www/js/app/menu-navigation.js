@@ -127,7 +127,7 @@ function MenuNavigation() {
   }
   
   this.ouvreMenu = function(){
-    console.log("ouvreMenu");
+    //console.log("ouvreMenu");
     self.menu.open();
   }
   
@@ -199,10 +199,25 @@ function MenuNavigation() {
   
   function pullDownAction(){
     // test si du nouveau contenu existe
+    //self.parent.verifieDonneesServeur();
+    self.parent.reVerifieDonneesServeur();
+    
+    // simulation latence internet
+    /*
     setTimeout(function () {
         self.parent.verifieDonneesServeur();
+        //self.parent.reVerifieDonneesServeur();
         //myScrollMenu.refresh();
     },1000);
+    */
+  }
+  
+  this.finMiseAJour = function(){
+    if (self.pullDownEl.className.match('loading')) {
+            self.pullDownEl.className = '';
+            $(".fondListe").removeClass("loading");
+            self.pullDownEl.querySelector('.pullDownLabel').innerHTML = 'actualiser';
+    }
   }
   
   
