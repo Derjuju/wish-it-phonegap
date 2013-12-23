@@ -312,8 +312,8 @@ function ContenuPrincipal() {
             
             var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
             
-            self.messagePerso = '<br><img src="'+imageToShare+'"><br>Offrez, vous aussi, une bonne (ou mauvaise) r&eacute;solution : <a href="http://wishit.freetouch.fr">wishit.freetouch.fr</a>';
-                    //"Offrez, vous aussi, une bonne (ou mauvaise) résolution";
+            //self.messagePerso = '<br><img src="'+imageToShare+'"><br>Offrez, vous aussi, une bonne (ou mauvaise) r&eacute;solution : <a href="http://wishit.freetouch.fr">wishit.freetouch.fr</a>';
+            self.messagePerso = "Offrez, vous aussi, une bonne (ou mauvaise) résolution";
             
             //share('message', 'sujet', 'image', 'site web');
             window.plugins.socialsharing.share(self.messagePerso, 'Bonne année et...', imageToShare, website_app);
