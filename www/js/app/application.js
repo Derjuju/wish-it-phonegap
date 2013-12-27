@@ -36,6 +36,7 @@ var permanentStorage = window.localStorage;
 var rubriqueActuelle = 0;
 
 var myScroll, myScrollMenu;
+var useTransition3D = true;
 
 var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     IS_IPHONE = navigator.userAgent.match( /iphone/gi ),
@@ -43,11 +44,11 @@ var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     
 // url des services
 var website_app = "http://wishit.freetouch.fr";
-var webservice_version = "http://wishit.freetouch.fr/webservices/check-version.php";
-var webservice_update = "http://wishit.freetouch.fr/webservices/update.php";
-var webservice_stats = "http://wishit.freetouch.fr/webservices/stats.php";
+var webservice_version = "http://wishit.freetouch.fr/services/checkVersion";
+var webservice_update = "http://wishit.freetouch.fr/services/update";
+var webservice_stats = "http://wishit.freetouch.fr/services/stats";
 
-var cdn_visuel = "http://wishit.freetouch.fr/webservices/";
+var cdn_visuel = "http://wishit.freetouch.fr/";
 
 
 //---------------------------------
@@ -114,9 +115,19 @@ function MyApplication(){
     //$("#app").css('width',window.innerWidth+"px");
     //$("#app").css('height',window.innerHeight+"px");
     
+    self.verifieUsage3D();
+    
     self.demarrageApplication = true;
     self.verifieDonneesServeur();
   };
+  
+  this.verifieUsage3D = function(){
+    if($("html").hasClass("csstransforms3d")){
+      useTransition3D = true;
+    }else{
+      useTransition3D = false;
+    }
+  }
   
   this.verifieDonneesServeur = function(){
     $("#eventManager").on('versionVerifiee', function() { onVersionVerifiee(); } );

@@ -78,16 +78,38 @@ body {
  */
 .navigation {
   display: none; /* masque au chargement */
-  width: 36%;
-  max-width: 228px;
+  
+  width: 100%;
 
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
                 
-  background-color: #FFF;
+  position: fixed;
+  z-index: 10;
 }
+html.csstransforms3d .navigation {
+  width: 36%;
+  max-width: 228px;
+  position: relative;
+}
+
+.navigation.no3D{
+  left:-100%;
+  display:block;
+  
+  -webkit-transition: all ease-out 0.5s; 
+      -moz-transition: all ease-out 0.5s; 
+       -ms-transition: all ease-out 0.5s;  
+        -o-transition: all ease-out 0.5s;  
+           transition: all ease-out 0.5s; 
+}
+.navigation.ouverture{
+  left:0%;
+}
+
 .meny {
+  background-color: #FFF;
 	display: block; 
 	/*overflow: auto;*/
 	/*left:-10px;*/
@@ -103,6 +125,17 @@ body {
 	/*width: 36%;
         max-width: 228px;*/
     width:100%;
+}
+.navigation.no3D .meny{
+  width:34%;
+  max-width: 114px;
+  float:left;
+  
+  -moz-box-shadow: 5px 0px 50px 0px #656565;
+  -webkit-box-shadow: 5px 0px 50px 0px #656565;
+  -o-box-shadow: 5px 0px 50px 0px #656565;
+  box-shadow: 5px 0px 50px 0px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=90, Strength=5);
 }
 
 /**
@@ -130,7 +163,8 @@ body {
 	overflow-x: hidden;
 	overflow-y: scroll;
 	list-style: none;
-
+}
+html.csstransforms3d .meny ul {
 	-webkit-perspective: 400px;
 	   -moz-perspective: 400px;
 	    -ms-perspective: 400px;
@@ -146,22 +180,24 @@ body {
 		/*height: 177px;*/
 		width: 100%;
 		z-index: 2;
+		
+		overflow:hidden;
+}
+html.csstransforms3d .meny ul li {
 
 		-webkit-transform: translateZ(0px);
 		   -moz-transform: translateZ(0px);
 		    -ms-transform: translateZ(0px);
 		     -o-transform: translateZ(0px);
 		        transform: translateZ(0px);
-		
-		overflow:hidden;
 }
-.meny ul li {
+html.csstransforms3d .meny ul li {
 		-webkit-transform: translate3d( 0, 0, 1px );
 }
 .meny ul li:nth-child(odd) {
 	/*background: #fff;*/
 }
-.meny ul li.cache {
+html.csstransforms3d .meny ul li.cache {
 		-webkit-transform: rotateY( 1deg );
 }
 
@@ -269,6 +305,10 @@ body.menuOuvert .mainContent {
   overflow-y: scroll;*/
   position:relative;
   z-index: 1;
+}
+
+html.csstransforms3d #retourMenuAccueil{
+  display:none;
 }
 
 #retourMenu a img {

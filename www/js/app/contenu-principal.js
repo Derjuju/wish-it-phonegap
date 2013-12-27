@@ -133,7 +133,12 @@ function ContenuPrincipal() {
     
     zoneCible.find('img').bind('click', function(){ clickSurVignette(this); });
     
-    var zoneRetourMenu = self.zoneContenuSelector.find('#retourMenu a');
+    var zoneRetourMenu;
+    if(typeContenu == "accueil") {
+      zoneRetourMenu = self.zoneContenuSelector.find('#retourMenuAccueil a');
+    }else{
+      zoneRetourMenu = self.zoneContenuSelector.find('#retourMenu a');
+    }
     zoneRetourMenu.bind('click', function(event){ 
       event.preventDefault();
       self.parent.menuNav.ouvreMenu();
@@ -359,9 +364,11 @@ function ContenuPrincipal() {
   // à déplacer dans la partie gestion de contenu
   function updateHeightInner() {
     self.contenuSelector.height(window.innerHeight);
-    self.contenuSelector.width((window.innerWidth - 10));
-    self.contenuSelector.css('margin-left','10px');
-    
+    if(useTransition3D)
+    {
+      self.contenuSelector.width((window.innerWidth - 10));
+      self.contenuSelector.css('margin-left','10px');
+    }
     //self.zoneContenuSelector.height(window.innerHeight);
     
     $("#wrapper").height(window.innerHeight);

@@ -38,33 +38,42 @@ function MenuNavigation() {
     self.pullDownEl = document.getElementById('pullDown');
     self.pullDownOffset = self.pullDownEl.offsetHeight;
     
-    self.menu = Meny.create({
-      // The element that will be animated in from off screen
-      menuElement: document.querySelector( '.navigation'), 
-      
-      //The contents that gets pushed aside while Meny is active
-      contentsElement: document.querySelector( '.contents' ),
-      
-      // [optional] The alignment of the menu (top/right/bottom/left)
-      position: Meny.getQuery().p || 'left',
-      
-      // [optional] The height of the menu (when using top/bottom position)
-      //height: 200,
+    self.menuSelector = $('.navigation');
+    
+    if(useTransition3D)
+    {
+      self.menu = Meny.create({
+        // The element that will be animated in from off screen
+        menuElement: document.querySelector( '.navigation'), 
 
-      // [optional] The width of the menu (when using left/right position)
-      width: largeurDevice,
+        //The contents that gets pushed aside while Meny is active
+        contentsElement: document.querySelector( '.contents' ),
 
-      // [optional] Distance from mouse (in pixels) when menu should open
-      threshold: window.innerWidth / 4,
-      
-      // [optional] Distance that appear from the border (in pixels) when menu is closed
-      overlap: 10
-    });
+        // [optional] The alignment of the menu (top/right/bottom/left)
+        position: Meny.getQuery().p || 'left',
+
+        // [optional] The height of the menu (when using top/bottom position)
+        //height: 200,
+
+        // [optional] The width of the menu (when using left/right position)
+        width: largeurDevice,
+
+        // [optional] Distance from mouse (in pixels) when menu should open
+        threshold: window.innerWidth / 4,
+
+        // [optional] Distance that appear from the border (in pixels) when menu is closed
+        overlap: 10
+      });
+    }else{
+      self.menuSelector.addClass('no3D');
+      self.menuSelector.bind('click', function(){ self.fermeMenu();});
+    }
     
     // activation des listeners si jamais on les avait enlevés
-    self.menu.bindEvents();
-    
-    self.menuSelector = $('.navigation');
+    if(useTransition3D)
+    {
+      self.menu.bindEvents();
+    }
     
     // ajout des listeners sur les actions du menu
     //Meny.dispatchEvent( dom.menu, 'open' );
@@ -127,12 +136,23 @@ function MenuNavigation() {
   }
   
   this.ouvreMenu = function(){
-    //console.log("ouvreMenu");
-    self.menu.open();
+    if(useTransition3D)
+    {
+      self.menu.open();
+    }else{
+      self.menuSelector.addClass('ouverture');
+      self.menuSelector.trigger('open');
+    }
   }
   
   this.fermeMenu = function(){
-    self.menu.close();
+    if(useTransition3D)
+    {
+      self.menu.close();
+    }else{
+      self.menuSelector.removeClass('ouverture');
+      self.menuSelector.trigger('close');
+    }
   }
   
   /**
@@ -244,14 +264,21 @@ function MenuNavigation() {
   }
   
   function synchroniseOuverture(){
-    //console.log("synchroniseOuverture");
     swipeBindtoMeny();
     $('body').addClass("menuOuvert");
+    if(!useTransition3D)
+    {
+      self.menuSelector.bind('click', function(){ self.fermeMenu();});
+    }
   }
 
   function synchroniseFermeture(){
     swipeBindtoContent();
     $('body').removeClass("menuOuvert");
+    if(!useTransition3D)
+    {
+      self.menuSelector.unbind('click');
+    }
   }
   
   function swipeBindtoContent(){
@@ -265,9 +292,12 @@ function MenuNavigation() {
   
   function onSwipeLeftContent( event ) {
     //alert("onSwipeLeftContent");
-    if(!self.menu.isOpen())
+    if(useTransition3D)
     {
-      self.menu.open();
+      if(!self.menu.isOpen())
+      {
+        self.menu.open();
+      }
     }
   }
   function onSwipeRightContent( event ) {
@@ -276,14 +306,21 @@ function MenuNavigation() {
   
   
   this.desactiveMenu = function(){
-    self.menu.unbindEvents();
+    if(useTransition3D)
+    {
+      self.menu.unbindEvents();
+    }
   }
   this.activeMenu = function(){
-    self.menu.bindEvents();
+    if(useTransition3D)
+    {
+      self.menu.bindEvents();
+    }
   }
   
   this.simuleClickNavigation = function(indice){
     self.menuElements.find('li').eq(indice).find('a').trigger('click');
+    self.ouvreMenu();
   }
   
 }
