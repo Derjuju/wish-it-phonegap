@@ -47,6 +47,9 @@
     <gap:config-file platform="ios" parent="MinimumOSVersion">
     	<string>6.0</string>
     </gap:config-file>
+    <gap:config-file platform="ios" parent="LSMinimumSystemVersion">
+    	<string>6.0</string>
+    </gap:config-file>
     
     
     <gap:plugin name="org.apache.cordova.device" />
