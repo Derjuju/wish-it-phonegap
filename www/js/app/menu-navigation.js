@@ -32,8 +32,14 @@ function MenuNavigation() {
   // constructeur
   this.initialise = function() {
     // largeur = 36% window or max = 228px
-    largeurDevice = Math.ceil(window.innerWidth*0.36);
+    if(useTransition3D)
+    {
+      largeurDevice = Math.ceil(window.innerWidth*0.36);
+    }else{
+      largeurDevice = Math.ceil(window.innerWidth*0.34);
+    }
     if(largeurDevice > 228) largeurDevice = 228;
+    if(largeurDevice < 114) largeurDevice = 114;
   	
     self.pullDownEl = document.getElementById('pullDown');
     self.pullDownOffset = self.pullDownEl.offsetHeight;

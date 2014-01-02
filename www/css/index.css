@@ -90,6 +90,7 @@ body {
 }
 html.csstransforms3d .navigation {
   width: 36%;
+  min-width: 114px;
   max-width: 228px;
   position: relative;
 }
@@ -128,7 +129,8 @@ html.csstransforms3d .navigation {
 }
 .navigation.no3D .meny{
   width:34%;
-  max-width: 114px;
+  min-width: 114px;
+  max-width: 228px;
   float:left;
   
   -moz-box-shadow: 5px 0px 50px 0px #656565;

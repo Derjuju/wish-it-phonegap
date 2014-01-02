@@ -127,6 +127,8 @@ function MyApplication(){
     }else{
       useTransition3D = false;
     }
+    // if(IS_ANDROID) useTransition3D = false;
+    
   }
   
   this.verifieDonneesServeur = function(){

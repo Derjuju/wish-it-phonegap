@@ -99,6 +99,9 @@ function ContenuPrincipal() {
     {
       self.zoneContenuSelector.find('.appVersion').html(self.parent.getAppVersion());
       self.zoneContenuSelector.find('.dataVersion').html(self.parent.getDataVersion());
+      var etatUI = "";
+      if(useTransition3D) { etatUI +="3d"; } else { etatUI +="2d"; }
+      self.zoneContenuSelector.find('.transformVersion').html(etatUI);
     }
     
     /*if(typeContenu == "mes-infos")
