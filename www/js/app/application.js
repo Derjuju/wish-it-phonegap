@@ -127,7 +127,8 @@ function MyApplication(){
     }else{
       useTransition3D = false;
     }
-    // if(IS_ANDROID) useTransition3D = false;
+    // pas de bonne gestion du menu en 3D sous Android
+    if(IS_ANDROID) useTransition3D = false;
     
   }
   
