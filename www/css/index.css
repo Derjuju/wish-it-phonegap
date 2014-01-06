@@ -310,10 +310,10 @@ body.menuOuvert .mainContent {
 }
 
 html.csstransforms3d #retourMenuAccueil{
-  display:none;
+  /*display:none;*/
 }
 
-#retourMenu a img {
+#retourMenuAccueil a img, #retourMenu a img {
   height: 30px;
   padding-left: 10px;
   padding-top: 10px;
