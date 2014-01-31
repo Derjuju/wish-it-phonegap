@@ -44,7 +44,7 @@ var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     
 // url des services
 var website_app = "http://wishit.freetouch.fr";
-var webservice_version = "http://wishit.freetouch.fr/services/checkVersion"+"/debug";
+var webservice_version = "http://wishit.freetouch.fr/services/checkVersion";//+"/debug";
 var webservice_update = "http://wishit.freetouch.fr/services/update";
 var webservice_stats = "http://wishit.freetouch.fr/services/stats";
 

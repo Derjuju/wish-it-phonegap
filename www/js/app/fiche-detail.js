@@ -26,6 +26,11 @@ function FicheDetail() {
   var idFiche = null;
   var objetFiche = null;
   
+  var champsActif = null;
+  
+  var largeurImposee = 240;
+  var hauteurImposee = 320;
+  
   
   // constructeur
   this.initialise = function(_parent, element) {
@@ -57,8 +62,8 @@ function FicheDetail() {
       var hauteurPossible = window.innerHeight - hauteurElementsUI;
       var largeurPossible = window.innerWidth;
       
-      var largeurImposee = 240;
-      var hauteurImposee = 320;
+      self.largeurImposee = 240;
+      self.hauteurImposee = 320;
       
       if(largeurPossible > 300){
         if(hauteurPossible > 400){
@@ -67,12 +72,18 @@ function FicheDetail() {
         }
       }
       
-      self.detailSelector.find('.visuel').html('<img src="'+imagePreview+'" width="'+largeurImposee+'" height="'+hauteurImposee+'">');
+      self.detailSelector.find('.visuel .wrapper').css({'width':self.largeurImposee, 'height':self.hauteurImposee});
+      self.detailSelector.find('.visuel .wrapper').html('<img src="'+imagePreview+'" width="'+self.largeurImposee+'" height="'+self.hauteurImposee+'">');
       
       // liaison des boutons
       self.detailSelector.find('.fermer a').bind('click', function(event){
         event.preventDefault();
         fermerDetail(element);
+      });
+      
+      self.detailSelector.find('.editer a').bind('click', function(event){
+        event.preventDefault();
+        personnalisation(imageVierge);
       });
       
       self.detailSelector.find('.envoyer a').bind('click', function(event){
@@ -122,6 +133,8 @@ function FicheDetail() {
     
     self.detailSelector.animate({'opacity':0},500, function(){
       self.detailSelector.removeClass('affiche');
+      self.detailSelector.find('.toolbox').css({'left':'0%','opacity':0});
+      self.detailSelector.find('.toolboxPerso').css({'left':'100%','opacity':0});
       
       self.detailSelector.find('.fermer a').unbind('click');
       
@@ -185,6 +198,78 @@ function FicheDetail() {
     });
     
     
+  }
+  
+  function personnalisation(imageVierge){
+    var zoneEdition = self.detailSelector.find('.visuel .wrapper');
+    // mise en place du visuel vierge
+    zoneEdition.find('img').attr('src',imageVierge);
+    
+    self.detailSelector.find('.toolbox').animate({'left':'-100%','opacity':0}, 500, function(){
+      self.detailSelector.find('.toolboxPerso').animate({'left':'0%','opacity':1}, 500, function(){
+        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne1" style="width:'+(self.largeurImposee - 12)+'px">ceci est</p>');
+        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne2" style="width:'+(self.largeurImposee - 12)+'px">un texte</p>');
+        
+        // initialisation des outils
+        self.detailSelector.find('.toolboxPerso a.alignGauche').bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            resetCss();
+            $(self.champsActif).addClass("txt_gauche");
+          }
+        });
+        self.detailSelector.find('.toolboxPerso a.alignCentre').bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            resetCss();
+            $(self.champsActif).addClass("txt_centre");
+          }
+        });
+        self.detailSelector.find('.toolboxPerso a.alignDroite').bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            resetCss();
+            $(self.champsActif).addClass("txt_droite");
+          }
+        });
+        
+        zoneEdition.find('.txt_editable').bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            $(self.champsActif).removeClass("txt_actif");
+          }
+          self.champsActif = this;
+          $(self.champsActif).addClass("txt_actif");
+        });
+        
+        // libère les sélections pour afficher sans aucun élément actif
+        self.detailSelector.bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            $(self.champsActif).removeClass("txt_actif");
+          }
+        });
+        
+      });      
+    });
+    
+    
+  }
+  
+  
+  function resetCss()
+  {
+    if(self.champsActif != null)
+    {      
+      $(self.champsActif).removeClass("txt_gauche");
+      $(self.champsActif).removeClass("txt_centre");
+      $(self.champsActif).removeClass("txt_droite");
+    }
   }
   
   
