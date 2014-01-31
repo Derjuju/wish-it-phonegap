@@ -247,7 +247,7 @@ function FicheDetail() {
         });
         
         // libère les sélections pour afficher sans aucun élément actif
-        self.detailSelector.bind('click', function(event){
+        zoneEdition.find('img').bind('click', function(event){
           event.preventDefault();
           if(self.champsActif != null)
           {
