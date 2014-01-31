@@ -476,7 +476,7 @@ html.csstransforms3d #retourMenuAccueil{
 }
 
 #detailManager .titre{
-  display:block;
+  display:none;/*block;*/
   /*width:300px;
   height:400px;*/
   width:80%;
@@ -506,12 +506,13 @@ html.csstransforms3d #retourMenuAccueil{
   width:100%; 
   float:left;
   z-index: 2;
+  margin-top:10px;
 }
 
 #detailManager .visuel img{
   display:block;
-  width:240px;
-  height:320px;
+  /*width:240px;
+  height:320px;*/
   margin:0 auto;
 }
 
@@ -539,23 +540,34 @@ html.csstransforms3d #retourMenuAccueil{
   margin:0 auto;
 }*/
 
-#detailManager .envoyer{
+#detailManager .toolbox{
   display:block;
   width:100%; 
   float:left;
   z-index: 2;
   color:#FFFFFF;
   font-size: 18px;
-  padding-top: 15px;
+  padding-top: 5px;
   text-align: center;
 }
-#detailManager .envoyer img{
+
+#detailManager .envoyer,#detailManager .editer{
+  display:block;
+  width:100%; 
+  float:left;
+  z-index: 2;
+  color:#FFFFFF;
+  font-size: 18px;
+  padding-top: 5px;
+  text-align: center;
+}
+#detailManager .envoyer img, #detailManager .editer img{
   display:block;
   margin:0 auto;
   height: 34px;
 }
-#detailManager .envoyer a.share img{
-  margin-top: 10px;
+#detailManager .envoyer a.share img, #detailManager .editer a.edit img{
+  /*margin-top: 10px;*/
 }
 
 

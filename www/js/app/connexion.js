@@ -65,6 +65,7 @@ function Connexion() {
   };
   
   function compareVersionAppEtData(appVersion,dataVersion){
+    
     // test si différence de version de l'application
     if(appVersion != self.getAppVersion())
     {
@@ -185,6 +186,8 @@ function Connexion() {
   
     donneesJson = objJSon["contenu"];
     
+    setAccueilMessage(objJSon["accueil"]); 
+    
     entries = new Array();
     entriesLabel = new Array();
     entriesLink = new Array();
@@ -233,6 +236,20 @@ function Connexion() {
     permanentStorage.setItem("data-version",self.lastDataVersion);
     //console.log("place en stockage permanent : "+self.lastDataVersion);
     //console.log("permanentStorage.getItem( data-version ) : "+permanentStorage.getItem("data-version"));
+  }
+  
+  this.getAccueilMessage = function(){   
+    var accueilMessage = "";
+    
+    if(permanentStorage.getItem("accueil")!= null)
+    {
+      accueilMessage = permanentStorage.getItem("accueil");
+    }    
+    return accueilMessage;
+  };  
+  
+  function setAccueilMessage(accueilMessage){    
+    permanentStorage.setItem("accueil",accueilMessage);
   }
   
 }

@@ -44,7 +44,7 @@ var IS_ANDROID = navigator.userAgent.match( /android/gi ),
     
 // url des services
 var website_app = "http://wishit.freetouch.fr";
-var webservice_version = "http://wishit.freetouch.fr/services/checkVersion";
+var webservice_version = "http://wishit.freetouch.fr/services/checkVersion"+"/debug";
 var webservice_update = "http://wishit.freetouch.fr/services/update";
 var webservice_stats = "http://wishit.freetouch.fr/services/stats";
 
@@ -276,6 +276,11 @@ function MyApplication(){
   function goToStore(){
     //@TODO : envoyer vers le store correspondant pour mettre à jour
     console.log("envoyer vers le store correspondant pour mettre à jour");
+    if(IS_IOS){
+      window.open('itms-apps://itunes.apple.com/fr/app/wish-it/id789831884?l=fr&ls=1&mt=8')
+    }else if(IS_ANDROID){
+      window.open('market://details?id=fr.freetouch.wishit');
+    }
   }
   
   this.getAppVersion = function(){
@@ -284,6 +289,10 @@ function MyApplication(){
   
   this.getDataVersion = function(){
     return connexion.getDataVersion();
+  }; 
+  
+  this.getAccueilMessage = function(){
+    return connexion.getAccueilMessage();
   }; 
   
 }
