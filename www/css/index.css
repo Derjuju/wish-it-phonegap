@@ -639,6 +639,34 @@ html.csstransforms3d #retourMenuAccueil{
   opacity:0;
 }
 
+
+#detailManager .toolboxPerso a{
+  display:inline;
+  width: 24px;
+  height: 24px;
+  overflow:hidden;
+  text-indent: -1000px;
+}
+#detailManager .toolboxPerso a.alignGauche{
+  /*background: #fff url("../img/ui/pull-icon@2x.png") 0 0 no-repeat;*/
+  background-image: url("../img/ui/bt-align-gauche-off.jpg") 0 0 no-repeat;
+}
+#detailManager .toolboxPerso a.alignGauche.actif{
+  background-image: url("../img/ui/bt-align-gauche-on.jpg") 0 0 no-repeat;
+}
+#detailManager .toolboxPerso a.alignCentre{
+  background-image: url("../img/ui/bt-align-centre-off.jpg") 0 0 no-repeat;
+}
+#detailManager .toolboxPerso a.alignCentre.actif{
+  background-image: url("../img/ui/bt-align-centre-on.jpg") 0 0 no-repeat;
+}
+#detailManager .toolboxPerso a.alignDroite{
+  background-image: url("../img/ui/bt-align-gauche-off.jpg") 0 0 no-repeat;
+}
+#detailManager .toolboxPerso a.alignDroite.actif{
+  background-image: url("../img/ui/bt-align-droite-on.jpg") 0 0 no-repeat;
+}
+
 /**
  *
  * Pull down styles

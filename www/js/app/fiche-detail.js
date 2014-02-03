@@ -217,6 +217,7 @@ function FicheDetail() {
           {
             resetCss();
             $(self.champsActif).addClass("txt_gauche");
+            $(this).addClass("actif");
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignCentre').bind('click', function(event){
@@ -225,6 +226,7 @@ function FicheDetail() {
           {
             resetCss();
             $(self.champsActif).addClass("txt_centre");
+            $(this).addClass("actif");
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignDroite').bind('click', function(event){
@@ -233,6 +235,7 @@ function FicheDetail() {
           {
             resetCss();
             $(self.champsActif).addClass("txt_droite");
+            $(this).addClass("actif");
           }
         });
         
@@ -270,6 +273,9 @@ function FicheDetail() {
       $(self.champsActif).removeClass("txt_centre");
       $(self.champsActif).removeClass("txt_droite");
     }
+    self.detailSelector.find('.toolboxPerso a').each(function(){
+      $(this).removeClass("actif");
+    });
   }
   
   
