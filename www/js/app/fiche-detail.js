@@ -248,6 +248,23 @@ function FicheDetail() {
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
         });
+        zoneEdition.find('.txt_editable').bind('focus', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            $(self.champsActif).removeClass("txt_actif");
+          }
+          self.champsActif = this;
+          $(self.champsActif).addClass("txt_actif");
+        });
+        
+        zoneEdition.find('.txt_editable').bind('blur', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            $(self.champsActif).removeClass("txt_actif");
+          }
+        });
         
         // libère les sélections pour afficher sans aucun élément actif
         zoneEdition.find('img').bind('click', function(event){
@@ -257,6 +274,16 @@ function FicheDetail() {
             $(self.champsActif).removeClass("txt_actif");
           }
         });
+        
+        
+        // ajout d'une détection quand le clavier se déplie pour recaler l'UI
+        window.onresize = function () {
+            if(self.champsActif != null)
+            {
+                $(self.champsActif).val("keyboardHeight = " + virtualKeyboardHeight());
+            }
+        }
+        
         
       });      
     });
@@ -278,5 +305,12 @@ function FicheDetail() {
     });
   }
   
-  
+  function virtualKeyboardHeight() {
+      var sx = document.body.scrollLeft, sy = document.body.scrollTop;
+      var naturalHeight = window.innerHeight;
+      window.scrollTo(sx, document.body.scrollHeight);
+      var keyboardHeight = naturalHeight - window.innerHeight;
+      window.scrollTo(sx, sy);
+      return keyboardHeight;
+  }
 }

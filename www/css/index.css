@@ -543,8 +543,9 @@ html.csstransforms3d #retourMenuAccueil{
 
 #detailManager .visuel p.txt_editable{
   color:#FFFFFF;
+  border:none;
 }
-#detailManager .visuel p.txt_actif{
+#detailManager .visuel p.txt_actif, #detailManager .visuel p.txt_editable:focus{
   border:1px solid #000000;
 }
 #detailManager .visuel p.txt_gauche{
