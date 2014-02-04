@@ -256,7 +256,9 @@ function FicheDetail() {
           }
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
-          alert("kbHeight = " + virtualKeyboardHeight());
+          setTimeout(function() {
+            alert("kbHeight = " + virtualKeyboardHeight());
+          }, 1);
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
