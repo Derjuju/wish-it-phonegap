@@ -159,7 +159,7 @@ function FicheDetail() {
         $.ajax({
                   type: 'POST',
                   url: webservice_stats,
-                  data: {id:idShare},
+                  data: {id:idShare, p:1},
                   async:true
                 });
         
