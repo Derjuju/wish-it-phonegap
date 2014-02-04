@@ -256,15 +256,15 @@ function FicheDetail() {
           }
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
-          $(self.champsActif).val("kbHeight = " + virtualKeyboardHeight());
+          alert("kbHeight = " + virtualKeyboardHeight());
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
           event.preventDefault();
-          if(self.champsActif != null)
+          /*if(self.champsActif != null)
           {
             $(self.champsActif).removeClass("txt_actif");
-          }
+          }*/
         });
         
         // libère les sélections pour afficher sans aucun élément actif
