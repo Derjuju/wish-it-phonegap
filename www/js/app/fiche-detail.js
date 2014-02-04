@@ -261,17 +261,25 @@ function FicheDetail() {
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
           setTimeout(function() {
-            alert("kbHeight = " + virtualKeyboardHeight().height);
+            //virtualKeyboardHeight().height
+            
+            // déplace la boite à outil
+            self.detailSelector.find('.toolboxPerso').css({'position':'fixed','bottom':virtualKeyboardHeight().height});
+            
           }, 1);
-          //console.log(virtualKeyboardHeight().height);
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
           event.preventDefault();
-          /*if(self.champsActif != null)
-          {
-            $(self.champsActif).removeClass("txt_actif");
-          }*/
+          
+          setTimeout(function() {
+            //virtualKeyboardHeight().height
+            
+            // replace la boite à outil
+            self.detailSelector.find('.toolboxPerso').css({'position':'absolute','bottom':'10px'});
+            
+          }, 1);
+          
         });
         
         // libère les sélections pour afficher sans aucun élément actif
