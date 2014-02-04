@@ -261,8 +261,9 @@ function FicheDetail() {
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
           setTimeout(function() {
-            alert("kbHeight = " + virtualKeyboardHeight());
+            alert("kbHeight = " + virtualKeyboardHeight().height);
           }, 1);
+          //console.log(virtualKeyboardHeight().height);
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
@@ -326,10 +327,10 @@ function FicheDetail() {
   
   function getViewport() {    // Note viewport sizing broken in Android 2.x see http://stackoverflow.com/questions/6601881/problem-with-meta-viewport-and-android
     var viewport = {
-            left: window.pageXOffset || documentElement.scrollLeft || 0,    // http://www.quirksmode.org/mobile/tableViewport.html
-            top: window.pageYOffset || documentElement.scrollTop || 0,
-            width: window.innerWidth || documentElement.clientWidth,
-            height: window.innerHeight || documentElement.clientHeight
+            left: window.pageXOffset || document.documentElement.scrollLeft || 0,    // http://www.quirksmode.org/mobile/tableViewport.html
+            top: window.pageYOffset || document.documentElement.scrollTop || 0,
+            width: window.innerWidth || document.documentElement.clientWidth,
+            height: window.innerHeight || document.documentElement.clientHeight
     };
     //if (isTouchDevice && isInput(getActiveElement())) {     // iOS *lies* about viewport size when keyboard is visible. See http://stackoverflow.com/questions/2593139/ipad-web-app-detect-virtual-keyboard-using-javascript-in-safari Input focus/blur can indicate, also scrollTop: 
         return {
