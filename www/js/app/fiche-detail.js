@@ -313,11 +313,32 @@ function FicheDetail() {
   }
   
   function virtualKeyboardHeight() {
-      var sx = document.body.scrollLeft, sy = document.body.scrollTop;
+      /*var sx = document.body.scrollLeft, sy = document.body.scrollTop;
       var naturalHeight = window.innerHeight;
       window.scrollTo(sx, document.body.scrollHeight);
       var keyboardHeight = naturalHeight - window.innerHeight;
       window.scrollTo(sx, sy);
-      return keyboardHeight;
+      return keyboardHeight;*/
+    
+      return getViewport();
+    
+  }
+  
+  function getViewport() {    // Note viewport sizing broken in Android 2.x see http://stackoverflow.com/questions/6601881/problem-with-meta-viewport-and-android
+    var viewport = {
+            left: window.pageXOffset || documentElement.scrollLeft || 0,    // http://www.quirksmode.org/mobile/tableViewport.html
+            top: window.pageYOffset || documentElement.scrollTop || 0,
+            width: window.innerWidth || documentElement.clientWidth,
+            height: window.innerHeight || documentElement.clientHeight
+    };
+    //if (isTouchDevice && isInput(getActiveElement())) {     // iOS *lies* about viewport size when keyboard is visible. See http://stackoverflow.com/questions/2593139/ipad-web-app-detect-virtual-keyboard-using-javascript-in-safari Input focus/blur can indicate, also scrollTop: 
+        return {
+            left: viewport.left,
+            top: viewport.top,
+            width: viewport.width,
+            height: viewport.height * (viewport.height > viewport.width ? 0.66 : 0.45)  // Fudge factor to allow for keyboard on iPad
+        };
+    /*}
+    return viewport;*/
   }
 }
