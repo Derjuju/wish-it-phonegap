@@ -604,7 +604,7 @@ html.csstransforms3d #retourMenuAccueil{
   text-align: center;
 }
 
-#detailManager .envoyer,#detailManager .editer{
+#detailManager .envoyer,#detailManager .editer,#detailManager .envoyerPerso{
   display:block;
   width:100%; 
   float:left;
@@ -614,12 +614,12 @@ html.csstransforms3d #retourMenuAccueil{
   padding-top: 5px;
   text-align: center;
 }
-#detailManager .envoyer img, #detailManager .editer img{
+#detailManager .envoyer img, #detailManager .editer img,#detailManager .envoyerPerso img{
   display:block;
   margin:0 auto;
   height: 34px;
 }
-#detailManager .envoyer a.share img, #detailManager .editer a.edit img{
+#detailManager .envoyer a.share img, #detailManager .editer a.edit img, #detailManager .envoyerPerso a.sharePerso img{
   /*margin-top: 10px;*/
 }
 

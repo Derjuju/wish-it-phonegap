@@ -31,6 +31,8 @@ function FicheDetail() {
   var largeurImposee = 240;
   var hauteurImposee = 320;
   
+  var imageToShare = null;
+  
   
   // constructeur
   this.initialise = function(_parent, element) {
@@ -90,7 +92,8 @@ function FicheDetail() {
         event.preventDefault();
         if($(this).hasClass('share'))
         {
-          ouvreChoixPartage(element,idElement);
+          self.imageToShare = cdn_visuel+'images/preview/'+donneesJson[idElement]["preview"];
+          ouvreChoixPartage();//element,idElement);
         }/*else if($(this).hasClass('share-sms'))
         {
           ouvreChoixPartage(element,idElement);
@@ -114,9 +117,53 @@ function FicheDetail() {
         
       });
       
-      $(window).bind('resize', function(){
-        alert("changement de taille");
-      })
+      
+      self.detailSelector.find('.envoyerPerso a').bind('click', function(event){
+        event.preventDefault();
+        if($(this).hasClass('sharePerso'))
+        {
+          var text1val = '';
+          var text2val = '';
+          
+          if(self.detailSelector.find('.visuel .wrapper p.ligne1').length > 0)
+          {
+            text1val = self.detailSelector.find('.visuel .wrapper p.ligne1').html();
+          }
+          if(self.detailSelector.find('.visuel .wrapper p.ligne2').length > 0)
+          {
+            text1val = self.detailSelector.find('.visuel .wrapper p.ligne2').html();
+          }
+          
+          $.ajax({
+                  type: 'POST',
+                  url: webservice_perso,
+                  data: {id:idShare, text1:text1val, text2:text2val},
+                  async:true
+                }).done(function(objJSon){       
+          
+                  if(objJSon["contenu"].length > 0)
+                  {
+                    self.imageToShare = objJSon["contenu"]["urlImagePerso"];
+                    ouvreChoixPartage();
+                    
+                    objJSon = null;
+                  }
+                
+                
+                
+                
+              }
+            );
+        }
+        
+        $.ajax({
+                  type: 'POST',
+                  url: webservice_stats,
+                  data: {id:idShare},
+                  async:true
+                });
+        
+      });
       
       self.detailSelector.addClass('affiche');
       self.detailSelector.height(window.innerHeight);
@@ -147,24 +194,22 @@ function FicheDetail() {
     });
   }
   
-  function ouvreChoixPartage(element,idElement){
-    var vignette = $(element);
-    var elementVignette = donneesJson[idElement];
-    
-    var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+  function ouvreChoixPartage() { //element,idElement){
+    //var vignette = $(element);
+    //var elementVignette = donneesJson[idElement];
         
         //window.plugins.socialsharing.share(null, null, imageToShare);
         var socialShare = window.plugins.socialsharing;
         socialShare.available(function(isAvailable) {
           if (isAvailable) {
             
-            var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
+            //var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
             
             //self.messagePerso = '<br><img src="'+imageToShare+'"><br>Offrez, vous aussi, une bonne (ou mauvaise) r&eacute;solution : <a href="http://wishit.freetouch.fr">wishit.freetouch.fr</a>';
             self.messagePerso = "Offrez, vous aussi, une bonne (ou mauvaise) résolution";
             
             //share('message', 'sujet', 'image', 'site web');
-            window.plugins.socialsharing.share(self.messagePerso, 'Bonne année et...', imageToShare, website_app);
+            window.plugins.socialsharing.share(self.messagePerso, 'Bonne année et...', self.imageToShare, website_app);
           }
         });
     
@@ -182,7 +227,7 @@ function FicheDetail() {
   
   
   function envoiChoixParMail(element,idElement){
-    var vignette = $(element);
+    /*var vignette = $(element);
     var elementVignette = donneesJson[idElement];
     
     var imageToShare = cdn_visuel+'images/preview/'+elementVignette["preview"];
@@ -200,7 +245,7 @@ function FicheDetail() {
         });
       }
     });
-    
+    */
     
   }
   
@@ -259,27 +304,11 @@ function FicheDetail() {
             $(self.champsActif).removeClass("txt_actif");
           }
           self.champsActif = this;
-          $(self.champsActif).addClass("txt_actif");
-          setTimeout(function() {
-            //virtualKeyboardHeight().height
-            
-            // déplace la boite à outil
-            self.detailSelector.find('.toolboxPerso').css({'position':'fixed','bottom':virtualKeyboardHeight().height});
-            
-          }, 1);
+          $(self.champsActif).addClass("txt_actif");          
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
-          event.preventDefault();
-          
-          setTimeout(function() {
-            //virtualKeyboardHeight().height
-            
-            // replace la boite à outil
-            self.detailSelector.find('.toolboxPerso').css({'position':'absolute','bottom':'10px'});
-            
-          }, 1);
-          
+          event.preventDefault();          
         });
         
         // libère les sélections pour afficher sans aucun élément actif
@@ -288,18 +317,9 @@ function FicheDetail() {
           if(self.champsActif != null)
           {
             $(self.champsActif).removeClass("txt_actif");
+            self.champsActif = null;
           }
-        });
-        
-        
-        // ajout d'une détection quand le clavier se déplie pour recaler l'UI
-        /*window.onresize = function () {
-            if(self.champsActif != null)
-            {
-                $(self.champsActif).val("keyboardHeight = " + virtualKeyboardHeight());
-            }
-        }*/       
-        
+        });        
         
       });      
     });
@@ -321,18 +341,16 @@ function FicheDetail() {
     });
   }
   
-  function virtualKeyboardHeight() {
-      /*var sx = document.body.scrollLeft, sy = document.body.scrollTop;
+  /*function virtualKeyboardHeight() {
+      var sx = document.body.scrollLeft, sy = document.body.scrollTop;
       var naturalHeight = window.innerHeight;
       window.scrollTo(sx, document.body.scrollHeight);
       var keyboardHeight = naturalHeight - window.innerHeight;
       window.scrollTo(sx, sy);
-      return keyboardHeight;*/
-    
-      return getViewport();
-    
-  }
+      return keyboardHeight;    
+  }*/
   
+  /*
   function getViewport() {    // Note viewport sizing broken in Android 2.x see http://stackoverflow.com/questions/6601881/problem-with-meta-viewport-and-android
     var viewport = {
             left: window.pageXOffset || document.documentElement.scrollLeft || 0,    // http://www.quirksmode.org/mobile/tableViewport.html
@@ -347,7 +365,7 @@ function FicheDetail() {
             width: viewport.width,
             height: viewport.height * (viewport.height > viewport.width ? 0.66 : 0.45)  // Fudge factor to allow for keyboard on iPad
         };
-    /*}
-    return viewport;*/
-  }
+    //}
+    //return viewport;
+  }*/
 }
