@@ -256,6 +256,7 @@ function FicheDetail() {
           }
           self.champsActif = this;
           $(self.champsActif).addClass("txt_actif");
+          $(self.champsActif).val("kbHeight = " + virtualKeyboardHeight());
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
@@ -277,12 +278,12 @@ function FicheDetail() {
         
         
         // ajout d'une détection quand le clavier se déplie pour recaler l'UI
-        window.onresize = function () {
+        /*window.onresize = function () {
             if(self.champsActif != null)
             {
                 $(self.champsActif).val("keyboardHeight = " + virtualKeyboardHeight());
             }
-        }
+        }*/
         
         
       });      
