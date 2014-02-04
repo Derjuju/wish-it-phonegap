@@ -114,6 +114,10 @@ function FicheDetail() {
         
       });
       
+      $(window).bind('resize', function(){
+        alert("changement de taille");
+      })
+      
       self.detailSelector.addClass('affiche');
       self.detailSelector.height(window.innerHeight);
       self.detailSelector.animate({'opacity':1},500);
@@ -285,7 +289,7 @@ function FicheDetail() {
             {
                 $(self.champsActif).val("keyboardHeight = " + virtualKeyboardHeight());
             }
-        }*/
+        }*/       
         
         
       });      
