@@ -122,25 +122,41 @@ function FicheDetail() {
         event.preventDefault();
         if($(this).hasClass('sharePerso'))
         {
+          var champs1 = self.detailSelector.find('.visuel .wrapper p.ligne1');
+          var champs2 = self.detailSelector.find('.visuel .wrapper p.ligne2');
+                  
+                  txt_gauche
+          
           var text1val = '';
           var text2val = '';
+          var align1 = 'c';
+          var align2 = 'c';
           
-          if(self.detailSelector.find('.visuel .wrapper p.ligne1').length > 0)
+          if(champs1.length > 0)
           {
-            text1val = self.detailSelector.find('.visuel .wrapper p.ligne1').html();
+            text1val = champs1.html();
+            if(text1val.hasClass("txt_gauche")) { align1 = 'l'; }
+            if(text1val.hasClass("txt_centre")) { align1 = 'c'; }
+            if(text1val.hasClass("txt_droite")) { align1 = 'r'; }
           }
-          if(self.detailSelector.find('.visuel .wrapper p.ligne2').length > 0)
+          if(champs2.length > 0)
           {
-            text1val = self.detailSelector.find('.visuel .wrapper p.ligne2').html();
+            text1val = champs2.html();
+            if(text2val.hasClass("txt_gauche")) { align2 = 'l'; }
+            if(text2val.hasClass("txt_centre")) { align2 = 'c'; }
+            if(text2val.hasClass("txt_droite")) { align2 = 'r'; }
           }
           
           $.ajax({
                   type: 'POST',
                   url: webservice_perso,
-                  data: {id:idShare, text1:text1val, text2:text2val},
+                  data: {id:idShare, text1:text1val, a1:align1, text2:text2val, a2:align2},
                   async:true
                 }).done(function(objJSon){       
           
+                  alert(objJSon["contenu"]);
+                  alert(objJSon["contenu"][0]["urlImagePerso"]);
+                  alert(objJSon["contenu"]["urlImagePerso"]);
                   if(objJSon["contenu"].length > 0)
                   {
                     self.imageToShare = objJSon["contenu"]["urlImagePerso"];
