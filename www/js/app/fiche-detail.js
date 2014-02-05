@@ -125,8 +125,6 @@ function FicheDetail() {
           var champs1 = self.detailSelector.find('.visuel .wrapper p.ligne1');
           var champs2 = self.detailSelector.find('.visuel .wrapper p.ligne2');
                   
-                  txt_gauche
-          
           var text1val = '';
           var text2val = '';
           var align1 = 'c';
