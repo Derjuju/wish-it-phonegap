@@ -111,7 +111,7 @@ function FicheDetail() {
         $.ajax({
                   type: 'POST',
                   url: webservice_stats,
-                  data: {id:idShare},
+                  data: {id:self.idFiche},
                   async:true
                 })
         
@@ -133,31 +133,29 @@ function FicheDetail() {
           if(champs1.length > 0)
           {
             text1val = champs1.html();
-            if(text1val.hasClass("txt_gauche")) { align1 = 'l'; }
-            if(text1val.hasClass("txt_centre")) { align1 = 'c'; }
-            if(text1val.hasClass("txt_droite")) { align1 = 'r'; }
+            if(champs1.hasClass("txt_gauche")) { align1 = 'l'; }
+            if(champs1.hasClass("txt_centre")) { align1 = 'c'; }
+            if(champs1.hasClass("txt_droite")) { align1 = 'r'; }
           }
           if(champs2.length > 0)
           {
-            text1val = champs2.html();
-            if(text2val.hasClass("txt_gauche")) { align2 = 'l'; }
-            if(text2val.hasClass("txt_centre")) { align2 = 'c'; }
-            if(text2val.hasClass("txt_droite")) { align2 = 'r'; }
+            text2val = champs2.html();
+            if(champs2.hasClass("txt_gauche")) { align2 = 'l'; }
+            if(champs2.hasClass("txt_centre")) { align2 = 'c'; }
+            if(champs2.hasClass("txt_droite")) { align2 = 'r'; }
           }
           
           $.ajax({
                   type: 'POST',
                   url: webservice_perso,
-                  data: {id:idShare, text1:text1val, a1:align1, text2:text2val, a2:align2},
+                  data: {id:self.idFiche, text1:text1val, a1:align1, text2:text2val, a2:align2},
+                  dataType: "json",
                   async:true
                 }).done(function(objJSon){       
           
-                  alert(objJSon["contenu"]);
-                  alert(objJSon["contenu"][0]["urlImagePerso"]);
-                  alert(objJSon["contenu"]["urlImagePerso"]);
                   if(objJSon["contenu"].length > 0)
                   {
-                    self.imageToShare = objJSon["contenu"]["urlImagePerso"];
+                    self.imageToShare = objJSon["contenu"][0]["urlImagePerso"];
                     ouvreChoixPartage();
                     
                     objJSon = null;
@@ -173,7 +171,7 @@ function FicheDetail() {
         $.ajax({
                   type: 'POST',
                   url: webservice_stats,
-                  data: {id:idShare, p:1},
+                  data: {id:self.idFiche, p:1},
                   async:true
                 });
         
@@ -270,8 +268,8 @@ function FicheDetail() {
     
     self.detailSelector.find('.toolbox').animate({'left':'-100%','opacity':0}, 500, function(){
       self.detailSelector.find('.toolboxPerso').animate({'left':'0%','opacity':1}, 500, function(){
-        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne1" style="width:'+(self.largeurImposee - 12)+'px">ceci est</p>');
-        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne2" style="width:'+(self.largeurImposee - 12)+'px">un texte</p>');
+        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne1" style="width:'+(self.largeurImposee - 12)+'px">*tapez ici</p>');
+        zoneEdition.append('<p contenteditable="true" class="txt_editable ligne2" style="width:'+(self.largeurImposee - 12)+'px">*votre texte</p>');
         
         // initialisation des outils
         self.detailSelector.find('.toolboxPerso a.alignGauche').bind('click', function(event){
@@ -281,6 +279,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_gauche");
             $(this).addClass("actif");
+            $(this).find('img').attr('src','img/ui/bt-align-gauche-on.jpg');
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignCentre').bind('click', function(event){
@@ -290,6 +289,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_centre");
             $(this).addClass("actif");
+            $(this).find('img').attr('src','img/ui/bt-align-centre-on.jpg');
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignDroite').bind('click', function(event){
@@ -299,6 +299,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_droite");
             $(this).addClass("actif");
+            $(this).find('img').attr('src','img/ui/bt-align-droite-on.jpg');
           }
         });
         
@@ -318,7 +319,10 @@ function FicheDetail() {
             $(self.champsActif).removeClass("txt_actif");
           }
           self.champsActif = this;
-          $(self.champsActif).addClass("txt_actif");          
+          $(self.champsActif).addClass("txt_actif"); 
+          if(($(this).html() == "*tapez ici")||($(this).html() == "*votre texte")){
+            $(this).html('');
+          }         
         });
         
         zoneEdition.find('.txt_editable').bind('blur', function(event){
@@ -351,7 +355,20 @@ function FicheDetail() {
       $(self.champsActif).removeClass("txt_droite");
     }
     self.detailSelector.find('.toolboxPerso a').each(function(){
-      $(this).removeClass("actif");
+      
+      if($(this).hasClass("actif")){
+        if($(this).hasClass('alignGauche')){            
+            $(this).find('img').attr('src','img/ui/bt-align-gauche-off.jpg');        
+        }    
+        if($(this).hasClass('alignCentre')){                    
+            $(this).find('img').attr('src','img/ui/bt-align-centre-off.jpg');        
+        }
+        if($(this).hasClass('alignDroite')){        
+            $(this).find('img').attr('src','img/ui/bt-align-droite-off.jpg');        
+        }       
+        $(this).removeClass("actif");
+      }
+      
     });
   }
   

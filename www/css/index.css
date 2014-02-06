@@ -506,7 +506,7 @@ html.csstransforms3d #retourMenuAccueil{
   width:100%; 
   float:left;
   z-index: 2;
-  margin-top:10px;
+  margin-top:5%;/*10px;*/
   position:relative;
 }
 
@@ -593,7 +593,7 @@ html.csstransforms3d #retourMenuAccueil{
   display:block;
   
   position: absolute;
-  bottom: 10px;
+  bottom: 3%;/*10px;*/
   
   width:100%; 
   float:left;
@@ -627,7 +627,7 @@ html.csstransforms3d #retourMenuAccueil{
   display:block;
   
   position: absolute;
-  bottom: 10px;
+  bottom: 3%;/*10px;*/
   
   left:100%;
   width:100%; 
@@ -728,4 +728,20 @@ html.csstransforms3d #retourMenuAccueil{
 @-webkit-keyframes loading {
 	from { -webkit-transform:rotate(0deg) translateZ(0); }
 	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+
+
+/* personnalisation smartphone */
+/* iphone 5 et android */
+@media screen and (min-height:500px) {
+    #detailManager .visuel {
+        margin-top: 15%;
+    }
+    #detailManager .envoyer, #detailManager .editer, #detailManager .envoyerPerso {
+        padding-top: 25px;
+    }
+    #detailManager .toolboxPerso .labelTools{
+      line-height: 40px;
+    }
 }
