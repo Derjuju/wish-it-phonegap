@@ -129,6 +129,8 @@ function FicheDetail() {
           var text2val = '';
           var align1 = 'c';
           var align2 = 'c';
+          var gras1 = 0;
+          var gras2 = 0;
           
           if(champs1.length > 0)
           {
@@ -136,6 +138,7 @@ function FicheDetail() {
             if(champs1.hasClass("txt_gauche")) { align1 = 'l'; }
             if(champs1.hasClass("txt_centre")) { align1 = 'c'; }
             if(champs1.hasClass("txt_droite")) { align1 = 'r'; }
+            if(champs1.hasClass("txt_gras")) { gras1 = 1; }
           }
           if(champs2.length > 0)
           {
@@ -143,12 +146,13 @@ function FicheDetail() {
             if(champs2.hasClass("txt_gauche")) { align2 = 'l'; }
             if(champs2.hasClass("txt_centre")) { align2 = 'c'; }
             if(champs2.hasClass("txt_droite")) { align2 = 'r'; }
+            if(champs2.hasClass("txt_gras")) { gras2 = 1; }
           }
           
           $.ajax({
                   type: 'POST',
                   url: webservice_perso,
-                  data: {id:self.idFiche, text1:text1val, a1:align1, text2:text2val, a2:align2},
+                  data: {id:self.idFiche, text1:text1val, a1:align1, g1:gras1, text2:text2val, a2:align2, g2:gras2},//, debug:align2},
                   dataType: "json",
                   async:true
                 }).done(function(objJSon){       
@@ -272,6 +276,21 @@ function FicheDetail() {
         zoneEdition.append('<p contenteditable="true" class="txt_editable ligne2" style="width:'+(self.largeurImposee - 12)+'px">*votre texte</p>');
         
         // initialisation des outils
+        self.detailSelector.find('.toolboxPerso a.miseEnGras').bind('click', function(event){
+          event.preventDefault();
+          if(self.champsActif != null)
+          {
+            if($(self.champsActif).hasClass("txt_gras")){
+              $(self.champsActif).removeClass("txt_gras");
+              $(this).removeClass("actif");
+              $(this).find('img').attr('src','img/ui/bt-gras-off.png');
+            }else{
+              $(self.champsActif).addClass("txt_gras");
+              $(this).addClass("actif");
+              $(this).find('img').attr('src','img/ui/bt-gras-on.png');
+            }
+          }
+        });
         self.detailSelector.find('.toolboxPerso a.alignGauche').bind('click', function(event){
           event.preventDefault();
           if(self.champsActif != null)
@@ -279,7 +298,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_gauche");
             $(this).addClass("actif");
-            $(this).find('img').attr('src','img/ui/bt-align-gauche-on.jpg');
+            $(this).find('img').attr('src','img/ui/bt-align-gauche-on.png');
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignCentre').bind('click', function(event){
@@ -289,7 +308,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_centre");
             $(this).addClass("actif");
-            $(this).find('img').attr('src','img/ui/bt-align-centre-on.jpg');
+            $(this).find('img').attr('src','img/ui/bt-align-centre-on.png');
           }
         });
         self.detailSelector.find('.toolboxPerso a.alignDroite').bind('click', function(event){
@@ -299,7 +318,7 @@ function FicheDetail() {
             resetCss();
             $(self.champsActif).addClass("txt_droite");
             $(this).addClass("actif");
-            $(this).find('img').attr('src','img/ui/bt-align-droite-on.jpg');
+            $(this).find('img').attr('src','img/ui/bt-align-droite-on.png');
           }
         });
         
@@ -354,17 +373,17 @@ function FicheDetail() {
       $(self.champsActif).removeClass("txt_centre");
       $(self.champsActif).removeClass("txt_droite");
     }
-    self.detailSelector.find('.toolboxPerso a').each(function(){
+    self.detailSelector.find('.toolboxPerso a.alignement').each(function(){
       
       if($(this).hasClass("actif")){
         if($(this).hasClass('alignGauche')){            
-            $(this).find('img').attr('src','img/ui/bt-align-gauche-off.jpg');        
+            $(this).find('img').attr('src','img/ui/bt-align-gauche-off.png');        
         }    
         if($(this).hasClass('alignCentre')){                    
-            $(this).find('img').attr('src','img/ui/bt-align-centre-off.jpg');        
+            $(this).find('img').attr('src','img/ui/bt-align-centre-off.png');        
         }
         if($(this).hasClass('alignDroite')){        
-            $(this).find('img').attr('src','img/ui/bt-align-droite-off.jpg');        
+            $(this).find('img').attr('src','img/ui/bt-align-droite-off.png');        
         }       
         $(this).removeClass("actif");
       }
